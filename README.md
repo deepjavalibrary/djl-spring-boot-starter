@@ -2,7 +2,7 @@
 
 ## General
 
-DJL stands for java deep learning library and as the name suggests is a library developed.
+DJL stands for java deep learning library and as the name suggests is a library developed to help java developers to get started with deep learning.
 This project is a spring-boot starter that allows spring boot developers to start using DJL for inference.
 
 At present the starter only supports dependency management, however in the future it will also provide auto configurations for inference and training.
