@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.4.RELEASE</version>
+        <relativePath/>
+        <!-- lookup parent from repository -->
+    </parent>
+    <groupId>ai.djl.spring</groupId>
+    <artifactId>djl-spring-boot-starter-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>djl-spring-boot-starter-parent</name>
+    <description>DJL starter project for Spring Boot</description>
+    <packaging>pom</packaging>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <properties>
+        <djl.version>0.3.0</djl.version>
+        <java.version>13</java.version>
+        <jna.version>5.3.0</jna.version>
+        <mxnet.native.version>1.6.0</mxnet.native.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ai.djl</groupId>
+            <artifactId>api</artifactId>
+            <version>${djl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ai.djl</groupId>
+            <artifactId>basicdataset</artifactId>
+            <version>${djl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ai.djl</groupId>
+            <artifactId>model-zoo</artifactId>
+            <version>${djl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ai.djl.mxnet</groupId>
+            <artifactId>mxnet-model-zoo</artifactId>
+            <version>${djl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ai.djl.mxnet</groupId>
+            <artifactId>mxnet-engine</artifactId>
+            <version>${djl.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>5.3.0</version>      <!-- overrides default spring boot version to comply with DJL -->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+</project>

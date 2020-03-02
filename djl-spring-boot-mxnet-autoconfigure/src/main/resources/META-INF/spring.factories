@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=ai.djl.spring.configuration.DjlAutoConfiguration

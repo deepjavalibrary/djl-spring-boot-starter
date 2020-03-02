@@ -1,0 +1,5 @@
+djl:
+  mx-model-zoo-type: BERT_QA
+  model-criteria:
+    backbone: resnet50
+    size: 512
