@@ -2,7 +2,7 @@
 
 ## General
 
-DJL stands for java deep learning library and as the name suggests is a library developed to help java developers to get started with deep learning.
+[DJL](https://github.com/awslabs/djl) stands for java deep learning library and as the name suggests is a library developed to help java developers to get started with deep learning.
 This project is a spring-boot starter that allows spring boot developers to start using DJL for inference.
 
 At present the starter only supports dependency management, however in the future it will also provide auto configurations for inference and training.
@@ -74,7 +74,7 @@ To use Auto Configuration you will need to bring it as:
 ## Examples
 
 See `djl-spring-boot-console-sample`
-<Reference to examples repo here>
+[A more advance example and demo of the start capability is here.](https://github.com/awslabs/djl)
 
 ## License
 This project is licensed under the Apache-2.0 License.
