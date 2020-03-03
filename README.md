@@ -11,9 +11,11 @@ At present the starter only supports dependency management, however in the futur
 
 Run the following command locally in order to install DJL spring boot starter in your local maven repository:
 
-  ./mvnw install
+    ./mvnw install
 
-Dependencies are divided in two sections:
+Eventually, starter kit artifacts will be available in maven central, until then the above step is needed to make the dependencies available in the local manven repository. Similar, for gradle builds, `mavenLocal()` repository must be enabled. 
+
+Dependencies are divided in two sections: starter dependencies (just the libraries) and spring auto-condiguration for mxnet. See below. 
 
 ### Dependency Starter  
 
@@ -70,11 +72,12 @@ To use Auto Configuration you will need to bring it as:
              backbone: resnet50
              size: 512
  
+For more information on available criteria that are currently part of the repository see [this reference](https://github.com/awslabs/djl/tree/master/mxnet/mxnet-model-zoo).
 
 ## Examples
 
 See `djl-spring-boot-console-sample`
-[A more advance example and demo of the start capability is here.](https://github.com/awslabs/djl)
+[A more advanced example and demo of the starter capability is here.](https://github.com/awslabs/djl)
 
 ## License
 This project is licensed under the Apache-2.0 License.
