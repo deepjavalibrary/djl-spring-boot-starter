@@ -72,11 +72,13 @@ To use Auto Configuration you will need to bring it as:
              backbone: resnet50
              size: 512
  
+The above configuration has IDE level support for content assistance in Intellij IDEA, Eclipse (with STS) and Netbeans.
+
 For more information on available criteria that are currently part of the repository see [this reference](https://github.com/awslabs/djl/tree/master/mxnet/mxnet-model-zoo).
 
 ## Examples
 
-See `djl-spring-boot-console-sample`
+See `djl-spring-boot-console-sample`.
 [A more advanced example and demo of the starter capability is here.](https://github.com/awslabs/djl)
 
 ## License
