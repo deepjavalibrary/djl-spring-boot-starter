@@ -79,7 +79,7 @@ For more information on available criteria that are currently part of the reposi
 ## Examples
 
 See `djl-spring-boot-console-sample`.
-[A more advanced example and demo of the starter capability is here.](https://github.com/awslabs/djl)
+[A more advanced example and demo of the starter capability is here.](https://github.com/awslabs/djl-spring-boot-starter-demo)
 
 ## License
 This project is licensed under the Apache-2.0 License.
