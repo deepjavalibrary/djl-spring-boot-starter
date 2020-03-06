@@ -1,5 +1,10 @@
 djl:
-  mx-model-zoo-type: BERT_QA
-  model-criteria:
-    backbone: resnet50
+  application-type: OBJECT_DETECTION
+  engine-type: MXNET
+  input-class: java.awt.image.BufferedImage
+  output-class: ai.djl.modality.cv.DetectedObjects
+  model-filter:
     size: 512
+    backbone: mobilenet1.0
+  arguments:
+    threshold: 0.2

@@ -14,25 +14,26 @@ package ai.djl.spring.configuration;
 
 import ai.djl.MalformedModelException;
 import ai.djl.inference.Predictor;
-import ai.djl.mxnet.zoo.MxModelZoo;
+import ai.djl.modality.cv.DetectedObjects;
+import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
+import ai.djl.repository.zoo.ModelZoo;
 import ai.djl.repository.zoo.ZooModel;
-import ai.djl.training.util.ProgressBar;
 import ai.djl.translate.Translator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Map;
 import java.util.function.Supplier;
 
 @Configuration
-@ConditionalOnClass(MxModelZoo.class)
 @ConditionalOnMissingBean(ZooModel.class)
 @EnableConfigurationProperties(DjlConfigurationProperties.class)
 public class DjlAutoConfiguration {
@@ -47,22 +48,51 @@ public class DjlAutoConfiguration {
 
     @Bean
     public ZooModel<?, ?> model() throws MalformedModelException, ModelNotFoundException, IOException {
-        MxModelZooType modelType = properties.getMxModelZooType();
-        if(modelType == null) {
-            LOG.warn("Model loader is not defined. Using default SSD loader {}", MxModelZooType.SSD);
-            modelType = MxModelZooType.SSD;
+        ApplicationType applicationType = properties.getApplicationType();
+        EngineType engineType = properties.getEngineType();
+        String artifactId = properties.getArtifactId();
+        Map<String, String> filter = properties.getModelFilter();
+        Map<String, Object> arguments = properties.getArguments();
+        Class<?> inputClass = properties.getInputClass();
+        if (inputClass == null) {
+            LOG.warn("Input class is not defined. Using default: BufferedImage");
+            inputClass = BufferedImage.class;
         }
-        return modelType.getLoader().loadModel(properties.getModelCriteria(), new ProgressBar());
+        Class<?> outputClass = properties.getOutputClass();
+        if (outputClass == null) {
+            LOG.warn("Input class is not defined. Using default: DetectedObjects");
+            outputClass = DetectedObjects.class;
+        }
+
+        Criteria.Builder<?, ?> builder = Criteria.builder().setTypes(inputClass, outputClass);
+        if (applicationType != null) {
+            builder.optApplication(applicationType.application());
+        }
+        if (engineType != null) {
+            builder.optEngine(engineType.engineName());
+        }
+        if (filter != null) {
+            builder.optFilters(filter);
+        }
+        if (arguments != null) {
+            builder.optArguments(arguments);
+        }
+        if (artifactId != null) {
+            builder.optModelZooName(artifactId);
+        }
+
+        return ModelZoo.loadModel(builder.build());
     }
 
     /**
      * Expected to be used with try-with-resources. The provided predictor is {@link AutoCloseable}.
+     *
      * @param model injected configured model
      * @return provider of the predictor object
      */
     @Bean
     public Supplier<Predictor<?, ?>> predictorProvider(ZooModel<?, ?> model) {
-        if(translator != null) {
+        if (translator != null) {
             LOG.info("Applying custom translator {}", translator.getClass());
         }
         return () -> translator == null ? model.newPredictor() : model.newPredictor(translator);

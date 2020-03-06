@@ -19,31 +19,73 @@ import java.util.Map;
 @ConfigurationProperties("djl")
 public class DjlConfigurationProperties {
 
+    private ApplicationType applicationType;
+    private Class<?> inputClass;
+    private Class<?> outputClass;
+    private EngineType engineType;
+    private String artifactId;
+    private Map<String, Object> arguments;
+
     /**
      * Criteria used as filters for model lookup.
      * For more information on available criteria that are currently part of the repository see
      * https://github.com/awslabs/djl/tree/master/mxnet/mxnet-model-zoo
      */
-    private Map<String, String> modelCriteria;
+    private Map<String, String> modelFilter;
 
-    /**
-     * Loader type to use. By default set to SSD (single shot detection).
-     */
-    private MxModelZooType mxModelZooType;
-
-    public Map<String, String> getModelCriteria() {
-        return modelCriteria;
+    public Map<String, String> getModelFilter() {
+        return modelFilter;
     }
 
-    public void setModelCriteria(Map<String, String> modelCriteria) {
-        this.modelCriteria = modelCriteria;
+    public void setModelFilter(Map<String, String> modelFilter) {
+        this.modelFilter = modelFilter;
     }
 
-    public MxModelZooType getMxModelZooType() {
-        return mxModelZooType;
+    public ApplicationType getApplicationType() {
+        return applicationType;
     }
 
-    public void setMxModelZooType(MxModelZooType mxModelZooType) {
-        this.mxModelZooType = mxModelZooType;
+    public void setApplicationType(ApplicationType applicationType) {
+        this.applicationType = applicationType;
+    }
+
+    public Class<?> getInputClass() {
+        return inputClass;
+    }
+
+    public void setInputClass(Class<?> inputClass) {
+        this.inputClass = inputClass;
+    }
+
+    public Class<?> getOutputClass() {
+        return outputClass;
+    }
+
+    public void setOutputClass(Class<?> outputClass) {
+        this.outputClass = outputClass;
+    }
+
+    public EngineType getEngineType() {
+        return engineType;
+    }
+
+    public void setEngineType(EngineType engineType) {
+        this.engineType = engineType;
+    }
+
+    public String getArtifactId() {
+        return artifactId;
+    }
+
+    public void setArtifactId(String artifactId) {
+        this.artifactId = artifactId;
+    }
+
+    public Map<String, Object> getArguments() {
+        return arguments;
+    }
+
+    public void setArguments(Map<String, Object> arguments) {
+        this.arguments = arguments;
     }
 }
