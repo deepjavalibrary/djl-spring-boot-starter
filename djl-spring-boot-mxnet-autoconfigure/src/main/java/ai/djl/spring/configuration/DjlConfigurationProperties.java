@@ -19,17 +19,40 @@ import java.util.Map;
 @ConfigurationProperties("djl")
 public class DjlConfigurationProperties {
 
+    /**
+     * Defines the type of application for the model.
+     *
+     * <p>
+     * For more information on available applications see
+     * https://github.com/awslabs/djl/blob/master/api/src/main/java/ai/djl/Application.java
+     */
     private ApplicationType applicationType;
+
+    /**
+     * Defines java data type used as input for inference.
+     */
     private Class<?> inputClass;
+
+    /**
+     * Defines java data type that expected for inference output.
+     */
     private Class<?> outputClass;
-    private EngineType engineType;
-    private String artifactId;
+
+    /**
+     * Arguments that allows user to override pre-process/post-process behavior.
+     *
+     * <p>
+     * The key/value pairs are model specific, check specific (@code ModelLoader} class for detail.
+     *
+     */
     private Map<String, Object> arguments;
 
     /**
-     * Criteria used as filters for model lookup.
-     * For more information on available criteria that are currently part of the repository see
-     * https://github.com/awslabs/djl/tree/master/mxnet/mxnet-model-zoo
+     * Filters used to lookup a model from model zoo.
+     *
+     * <p>
+     * For more information on available filters that are currently part of the repository see
+     * https://github.com/awslabs/djl/tree/master/model-zoo#how-to-find-a-pre-trained-model-in-the-model-zoo
      */
     private Map<String, String> modelFilter;
 
@@ -63,22 +86,6 @@ public class DjlConfigurationProperties {
 
     public void setOutputClass(Class<?> outputClass) {
         this.outputClass = outputClass;
-    }
-
-    public EngineType getEngineType() {
-        return engineType;
-    }
-
-    public void setEngineType(EngineType engineType) {
-        this.engineType = engineType;
-    }
-
-    public String getArtifactId() {
-        return artifactId;
-    }
-
-    public void setArtifactId(String artifactId) {
-        this.artifactId = artifactId;
     }
 
     public Map<String, Object> getArguments() {

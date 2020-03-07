@@ -49,8 +49,6 @@ public class DjlAutoConfiguration {
     @Bean
     public ZooModel<?, ?> model() throws MalformedModelException, ModelNotFoundException, IOException {
         ApplicationType applicationType = properties.getApplicationType();
-        EngineType engineType = properties.getEngineType();
-        String artifactId = properties.getArtifactId();
         Map<String, String> filter = properties.getModelFilter();
         Map<String, Object> arguments = properties.getArguments();
         Class<?> inputClass = properties.getInputClass();
@@ -68,17 +66,11 @@ public class DjlAutoConfiguration {
         if (applicationType != null) {
             builder.optApplication(applicationType.application());
         }
-        if (engineType != null) {
-            builder.optEngine(engineType.engineName());
-        }
         if (filter != null) {
             builder.optFilters(filter);
         }
         if (arguments != null) {
             builder.optArguments(arguments);
-        }
-        if (artifactId != null) {
-            builder.optModelZooName(artifactId);
         }
 
         return ModelZoo.loadModel(builder.build());
