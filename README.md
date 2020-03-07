@@ -66,11 +66,20 @@ To use Auto Configuration you will need to bring it as:
  Autoconfiguration supports properties that can help with automatic lookup of the model.
  For example (assuming `application.yml` is used):
  
-     djl:
-       mx-model-zoo-type: SSD
-       model-criteria:
-             backbone: resnet50
-             size: 512
+    djl:
+        # Define application type
+        application-type: OBJECT_DETECTION
+        # Define input data type, a model may accept multiple input data type
+        input-class: java.awt.image.BufferedImage
+        # Define output data type, a model may generate different out put
+        output-class: ai.djl.modality.cv.DetectedObjects
+        # Define filters that matches your application's need
+        model-filter:
+            size: 512
+            backbone: mobilenet1.0
+        # Override default pre-processing/post-processing behavior
+        arguments:
+            threshold: 0.2
  
 The above configuration has IDE level support for content assistance in Intellij IDEA, Eclipse (with STS) and Netbeans.
 

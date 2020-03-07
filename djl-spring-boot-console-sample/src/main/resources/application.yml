@@ -1,10 +1,14 @@
 djl:
+  # Define application type
   application-type: OBJECT_DETECTION
-  engine-type: MXNET
+  # Define input data type, a model may accept multiple input data type
   input-class: java.awt.image.BufferedImage
+  # Define output data type, a model may generate different out put
   output-class: ai.djl.modality.cv.DetectedObjects
+  # Define filters that matches your application's need
   model-filter:
     size: 512
     backbone: mobilenet1.0
+  # Override default pre-processing/post-processing behavior
   arguments:
     threshold: 0.2

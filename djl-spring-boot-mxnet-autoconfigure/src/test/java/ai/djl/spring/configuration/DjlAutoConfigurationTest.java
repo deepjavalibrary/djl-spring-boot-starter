@@ -68,9 +68,11 @@ public class DjlAutoConfigurationTest {
     @Test
     public void loadConfigurationWithPropertiesDefined() {
         applicationContextRunner.withPropertyValues(
-                "djl.mxModelZooType = BERT_QA",
-                "djl.modelCriteria.backbone = bert",
-                "djl.modelCriteria.dataset = book_corpus_wiki_en_uncased")
+                "djl.application-type = QUESTION_ANSWER",
+                "djl.input-class = ai.djl.mxnet.zoo.nlp.qa.QAInput",
+                "djl.output-class = java.lang.String",
+                "djl.model-filter.backbone = bert",
+                "djl.model-filter.dataset = book_corpus_wiki_en_uncased")
                 .run(context -> {
                     assertThat(context).hasSingleBean(ZooModel.class);
                     assertThat(context).hasBean("predictorProvider");
@@ -80,12 +82,14 @@ public class DjlAutoConfigurationTest {
     @Test
     public void loadSSDWithCustomTranslator() {
         applicationContextRunner.withPropertyValues(
-                "djl.mxModelZooType = SSD",
-                "djl.modelCriteria.backbone = resnet50",
-                "djl.modelCriteria.dataset = voc",
-                "djl.modelCriteria.flavor = v1",
-                "djl.modelCriteria.size = 512"
-                )
+                "djl.application-type = OBJECT_DETECTION",
+                "djl.input-class = java.awt.image.BufferedImage",
+                "djl.output-class = ai.djl.modality.cv.DetectedObjects",
+                "djl.model-filter.size = 512",
+                "djl.model-filter.backbone = resnet50",
+                "djl.model-filter.flavor = v1",
+                "djl.model-filter.dataset = voc",
+                "djl.arguments.threshold = 0.1")
                 .withUserConfiguration(SSDWithTranslatorModelConfiguration.class)
                 .run(context -> {
                     assertThat(context).hasSingleBean(ZooModel.class);
