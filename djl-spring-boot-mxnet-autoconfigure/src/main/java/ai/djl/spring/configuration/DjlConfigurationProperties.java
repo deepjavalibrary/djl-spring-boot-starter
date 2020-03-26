@@ -23,23 +23,23 @@ public class DjlConfigurationProperties {
      * Defines the type of application for the model.
      *
      * <p>
-     * For more information on available applications see
+     * For more information on available applications, see
      * https://github.com/awslabs/djl/blob/master/api/src/main/java/ai/djl/Application.java
      */
     private ApplicationType applicationType;
 
     /**
-     * Defines java data type used as input for inference.
+     * Defines the java data type used as input for inference.
      */
     private Class<?> inputClass;
 
     /**
-     * Defines java data type that expected for inference output.
+     * Defines the java data type expected for inference output.
      */
     private Class<?> outputClass;
 
     /**
-     * Arguments that allows user to override pre-process/post-process behavior.
+     * Arguments that allow the user to override pre-process/post-process behavior.
      *
      * <p>
      * The key/value pairs are model specific, check specific (@code ModelLoader} class for detail.
@@ -51,7 +51,7 @@ public class DjlConfigurationProperties {
      * Filters used to lookup a model from model zoo.
      *
      * <p>
-     * For more information on available filters that are currently part of the repository see
+     * For more information on available filters that are currently part of the repository, see
      * https://github.com/awslabs/djl/tree/master/model-zoo#how-to-find-a-pre-trained-model-in-the-model-zoo
      */
     private Map<String, String> modelFilter;
