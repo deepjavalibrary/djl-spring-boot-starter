@@ -25,4 +25,5 @@
     <module>djl-spring-boot-starter-mxnet-win-x86_64</module>
     <module>djl-spring-boot-console-sample</module>
   </modules>
+
 </project>
