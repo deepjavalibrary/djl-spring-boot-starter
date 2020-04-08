@@ -18,15 +18,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Debug output
-      run: mvn -f djl-spring-boot-starter-parent/pom.xml  help:effective-settings -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn -f djl-spring-boot-starter-parent/pom.xml  help:effective-settings -s settings.xml
     - name: Publish to OSS Repository Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn deploy -s settings.xml
       env:
         OSS_USERNAME: ${{ secrets.ossrhUsername }}
         OSS_PASSWORD: ${{ secrets.ossrhPassword }}
