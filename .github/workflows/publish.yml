@@ -28,7 +28,7 @@ jobs:
         OSS_PASSWORD: ${{ secrets.ossrhPassword }}
         GPG_KEY: ${{ secrets.signingKey }}
     - name: Publish to OSS Repository Apache Maven
-      run: mvn deploy -s settings.xml
+      run: mvn deploy -s settings.xml -Dgpg.passphrase=$GPG_PASSWORD
       env:
         OSS_USERNAME: ${{ secrets.ossrhUsername }}
         OSS_PASSWORD: ${{ secrets.ossrhPassword }}
