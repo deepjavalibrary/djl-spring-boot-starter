@@ -23,9 +23,10 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
-    - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+    - name: Debug output
+      run: mvn -f djl-spring-boot-starter-parent/pom.xml  help:effective-settings -s settings.xml
+    - name: Publish to OSS Repository Apache Maven
+      run: mvn deploy -s settings.xml
       env:
         OSS_USERNAME: ${{ secrets.ossrhUsername }}
         OSS_PASSWORD: ${{ secrets.ossrhPassword }}
