@@ -111,6 +111,10 @@
                         </executions>
                         <configuration>
                             <executable>gpg</executable>
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
                         </configuration>
                     </plugin>
                 </plugins>
