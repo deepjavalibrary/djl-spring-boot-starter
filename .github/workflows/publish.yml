@@ -23,6 +23,10 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Debug output
       run: mvn -f djl-spring-boot-starter-parent/pom.xml  help:effective-settings -s settings.xml
+      env:
+        OSS_USERNAME: ${{ secrets.ossrhUsername }}
+        OSS_PASSWORD: ${{ secrets.ossrhPassword }}
+        GPG_KEY: ${{ secrets.signingKey }}
     - name: Publish to OSS Repository Apache Maven
       run: mvn deploy -s settings.xml
       env:
