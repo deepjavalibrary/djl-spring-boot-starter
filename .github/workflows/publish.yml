@@ -21,14 +21,14 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Debug output
-      run: mvn -f djl-spring-boot-starter-parent/pom.xml  help:effective-settings -s settings.xml
+    - name: Set up GPG
+      run: |
+        echo "$GPG_KEY" > private.asc
+        gpg --import --batch private.asc
       env:
-        OSS_USERNAME: ${{ secrets.ossrhUsername }}
-        OSS_PASSWORD: ${{ secrets.ossrhPassword }}
         GPG_KEY: ${{ secrets.signingKey }}
     - name: Publish to OSS Repository Apache Maven
-      run: mvn deploy -s settings.xml -Dgpg.passphrase=$GPG_PASSWORD -Dgpg.skip=true
+      run: mvn deploy -s settings.xml -Dgpg.passphrase=$GPG_PASSWORD
       env:
         OSS_USERNAME: ${{ secrets.ossrhUsername }}
         OSS_PASSWORD: ${{ secrets.ossrhPassword }}
