@@ -38,8 +38,8 @@
   </build>
 
   <scm>
-    <connection>scm:git:git@github.com:awslabs/djl-spring-boot-starter.git</connection>
-    <developerConnection>scm:git:git@github.com:awslabs/djl-spring-boot-starter.git</developerConnection>
+    <connection>https://github.com/awslabs/djl-spring-boot-starter</connection>
+    <developerConnection>https://github.com/awslabs/djl-spring-boot-starter</developerConnection>
     <url>https://github.com/awslabs/djl-spring-boot-starter</url>
     <tag>HEAD</tag>
   </scm>
