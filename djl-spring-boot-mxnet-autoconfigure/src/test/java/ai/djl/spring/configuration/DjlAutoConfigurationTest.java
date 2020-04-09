@@ -13,8 +13,8 @@
 package ai.djl.spring.configuration;
 
 import ai.djl.MalformedModelException;
-import ai.djl.modality.cv.DetectedObjects;
-import ai.djl.modality.cv.SingleShotDetectionTranslator;
+import ai.djl.modality.cv.output.DetectedObjects;
+import ai.djl.modality.cv.translator.SingleShotDetectionTranslator;
 import ai.djl.modality.cv.transform.Resize;
 import ai.djl.modality.cv.transform.ToTensor;
 import ai.djl.mxnet.zoo.MxModelZoo;
@@ -69,7 +69,7 @@ public class DjlAutoConfigurationTest {
     public void loadConfigurationWithPropertiesDefined() {
         applicationContextRunner.withPropertyValues(
                 "djl.application-type = QUESTION_ANSWER",
-                "djl.input-class = ai.djl.mxnet.zoo.nlp.qa.QAInput",
+                "djl.input-class = ai.djl.modality.nlp.qa.QAInput",
                 "djl.output-class = java.lang.String",
                 "djl.model-filter.backbone = bert",
                 "djl.model-filter.dataset = book_corpus_wiki_en_uncased")
@@ -84,7 +84,7 @@ public class DjlAutoConfigurationTest {
         applicationContextRunner.withPropertyValues(
                 "djl.application-type = OBJECT_DETECTION",
                 "djl.input-class = java.awt.image.BufferedImage",
-                "djl.output-class = ai.djl.modality.cv.DetectedObjects",
+                "djl.output-class = ai.djl.modality.cv.output.DetectedObjects",
                 "djl.model-filter.size = 512",
                 "djl.model-filter.backbone = resnet50",
                 "djl.model-filter.flavor = v1",

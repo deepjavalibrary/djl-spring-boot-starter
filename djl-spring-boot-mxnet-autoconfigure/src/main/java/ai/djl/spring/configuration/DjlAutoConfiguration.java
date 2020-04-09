@@ -14,7 +14,7 @@ package ai.djl.spring.configuration;
 
 import ai.djl.MalformedModelException;
 import ai.djl.inference.Predictor;
-import ai.djl.modality.cv.DetectedObjects;
+import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
 import ai.djl.repository.zoo.ModelZoo;

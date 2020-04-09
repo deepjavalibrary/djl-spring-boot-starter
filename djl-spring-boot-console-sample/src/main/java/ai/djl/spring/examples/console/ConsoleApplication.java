@@ -13,7 +13,7 @@
 package ai.djl.spring.examples.console;
 
 import ai.djl.inference.Predictor;
-import ai.djl.modality.cv.DetectedObjects;
+import ai.djl.modality.cv.output.DetectedObjects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
