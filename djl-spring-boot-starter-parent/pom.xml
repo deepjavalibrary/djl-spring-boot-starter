@@ -112,6 +112,7 @@
                         <configuration>
                             <executable>gpg</executable>
                             <gpgArguments>
+                                <!-- headless mode prevents pin entry, and loopback prevents checks with keyserver -->
                                 <arg>--pinentry-mode</arg>
                                 <arg>loopback</arg>
                             </gpgArguments>
