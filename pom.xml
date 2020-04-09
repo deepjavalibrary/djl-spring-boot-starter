@@ -25,6 +25,7 @@
     <module>djl-spring-boot-starter-mxnet-win-x86_64</module>
     <module>djl-spring-boot-console-sample</module>
   </modules>
+
   <build>
     <plugins>
       <plugin>
@@ -36,4 +37,20 @@
       </plugin>
     </plugins>
   </build>
+
+  <scm>
+    <connection>scm:git:git@github.com:awslabs/djl-spring-boot-starter.git</connection>
+    <developerConnection>scm:git:git@github.com:awslabs/djl-spring-boot-starter.git</developerConnection>
+    <url>https://github.com/awslabs/djl-spring-boot-starter</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <name>DJL.AI Team</name>
+      <email>djl-dev@amazon.com</email>
+      <organization>Amazon AI</organization>
+      <organizationUrl>https://amazon.com</organizationUrl>
+    </developer>
+  </developers>
+
 </project>
