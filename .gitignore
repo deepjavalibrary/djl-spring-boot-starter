@@ -32,3 +32,4 @@ build/
 
 ### Tmp ###
 # /djl-spring-boot-mxnet-autoconfigure/
+.gradle

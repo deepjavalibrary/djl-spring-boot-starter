@@ -75,7 +75,7 @@ To use autoconfiguration, use the following dependency:
         # Define input data type, a model may accept multiple input data type
         input-class: java.awt.image.BufferedImage
         # Define output data type, a model may generate different out put
-        output-class: ai.djl.modality.cv.DetectedObjects
+        output-class: ai.djl.modality.cv.output.DetectedObjects
         # Define filters that matches your application's need
         model-filter:
             size: 512
