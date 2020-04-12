@@ -34,24 +34,26 @@
     </distributionManagement>
 
     <properties>
-        <djl.version>0.4.1</djl.version>
+        <djl.version>0.5.0-SNAPSHOT</djl.version>
         <java.version>11</java.version>
         <jna.version>5.3.0</jna.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
-        <mxnet.native.version>1.6.0</mxnet.native.version>
+        <mxnet.native.version>1.7.0-a-SNAPSHOT</mxnet.native.version>
         <pytorch.native.version>1.4.0</pytorch.native.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>djl.ai</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
             <groupId>ai.djl</groupId>
             <artifactId>api</artifactId>
-            <version>${djl.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>ai.djl</groupId>
-            <artifactId>repository</artifactId>
             <version>${djl.version}</version>
         </dependency>
         <dependency>

@@ -11,6 +11,13 @@
   <name>djl-spring-boot-starter-mxnet-auto</name>
   <description>DJL MXNet Spring Boot starter project with automatic platform detection</description>
 
+  <repositories>
+    <repository>
+      <id>djl.ai</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
+
   <licenses>
     <license>
       <name>The Apache License, Version 2.0</name>
