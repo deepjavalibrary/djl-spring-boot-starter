@@ -39,6 +39,11 @@ public class DjlConfigurationProperties {
     private Class<?> outputClass;
 
     /**
+     * Defines the artifactId of the model to be loaded.
+     */
+    private String modelArtifactId;
+
+    /**
      * Arguments that allow the user to override pre-process/post-process behavior.
      *
      * <p>
@@ -86,6 +91,14 @@ public class DjlConfigurationProperties {
 
     public void setOutputClass(Class<?> outputClass) {
         this.outputClass = outputClass;
+    }
+
+    public String getModelArtifactId() {
+        return modelArtifactId;
+    }
+
+    public void setModelArtifactId(String modelArtifactId) {
+        this.modelArtifactId = modelArtifactId;
     }
 
     public Map<String, Object> getArguments() {
