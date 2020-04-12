@@ -80,6 +80,18 @@ public class DjlAutoConfigurationTest {
     }
 
     @Test
+    public void loadConfigurationWithArtifactId() {
+        applicationContextRunner.withPropertyValues(
+                "djl.input-class = java.awt.image.BufferedImage",
+                "djl.output-class = ai.djl.modality.Classifications",
+                "djl.modelArtifactId = ai.djl.mxnet:squeezenet")
+                .run(context -> {
+                    assertThat(context).hasSingleBean(ZooModel.class);
+                    assertThat(context).hasBean("predictorProvider");
+                });
+    }
+
+    @Test
     public void loadSSDWithCustomTranslator() {
         applicationContextRunner.withPropertyValues(
                 "djl.application-type = OBJECT_DETECTION",
