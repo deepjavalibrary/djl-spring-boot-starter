@@ -17,7 +17,7 @@
 
   <modules>
     <module>djl-spring-boot-starter-parent</module>
-    <module>djl-spring-boot-mxnet-autoconfigure</module>
+    <module>djl-spring-boot-starter-autoconfigure</module>
     <module>djl-spring-boot-starter-mxnet-auto</module>
     <module>djl-spring-boot-starter-mxnet-osx-x86_64</module>
     <module>djl-spring-boot-starter-mxnet-linux-x86_64</module>

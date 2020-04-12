@@ -7,10 +7,10 @@
     <version>0.2-SNAPSHOT</version>
     <relativePath>../djl-spring-boot-starter-parent</relativePath>
   </parent>
-  <artifactId>djl-spring-boot-starter-mxnet-autoconfigure</artifactId>
+  <artifactId>djl-spring-boot-starter-autoconfigure</artifactId>
   <version>0.2-SNAPSHOT</version>
-  <name>djl-spring-boot-starter-mxnet-autoconfigure</name>
-  <description>DJL MXNet Spring Boot starter project for Mac OSX</description>
+  <name>djl-spring-boot-starter-autoconfigure</name>
+  <description>DJL Spring Boot starter project</description>
 
   <licenses>
     <license>
@@ -21,15 +21,14 @@
 
   <dependencies>
     <dependency>
-      <groupId>ai.djl.mxnet</groupId>
-      <artifactId>mxnet-native-auto</artifactId>
-      <version>${mxnet.native.version}</version>
-      <optional>true</optional>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ai.djl.spring</groupId>
+      <artifactId>djl-spring-boot-starter-mxnet-auto</artifactId>
+      <version>0.2-SNAPSHOT</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

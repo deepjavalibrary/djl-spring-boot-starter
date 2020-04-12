@@ -7,9 +7,7 @@
     <version>0.2-SNAPSHOT</version>
     <relativePath>../djl-spring-boot-starter-parent</relativePath>
   </parent>
-  <groupId>ai.djl.spring</groupId>
   <artifactId>djl-spring-boot-starter-mxnet-osx-x86_64</artifactId>
-  <version>0.2-SNAPSHOT</version>
   <name>djl-spring-boot-starter-mxnet-osx-x86_64</name>
   <description>DJL MXNet Spring Boot starter project for Mac OSX</description>
 
@@ -21,6 +19,17 @@
   </licenses>
 
   <dependencies>
+    <dependency>
+      <groupId>ai.djl.mxnet</groupId>
+      <artifactId>mxnet-model-zoo</artifactId>
+      <version>${djl.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ai.djl.mxnet</groupId>
+      <artifactId>mxnet-engine</artifactId>
+      <version>${djl.version}</version>
+      <scope>runtime</scope>
+    </dependency>
     <dependency>
       <groupId>ai.djl.mxnet</groupId>
       <artifactId>mxnet-native-mkl</artifactId>
