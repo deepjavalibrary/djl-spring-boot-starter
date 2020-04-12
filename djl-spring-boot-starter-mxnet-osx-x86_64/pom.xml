@@ -18,6 +18,13 @@
     </license>
   </licenses>
 
+  <repositories>
+    <repository>
+      <id>djl.ai</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>ai.djl.mxnet</groupId>
