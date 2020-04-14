@@ -51,6 +51,7 @@ public class DjlAutoConfiguration {
         ApplicationType applicationType = properties.getApplicationType();
         Map<String, String> filter = properties.getModelFilter();
         Map<String, Object> arguments = properties.getArguments();
+        String artifactId = properties.getModelArtifactId();
         Class<?> inputClass = properties.getInputClass();
         if (inputClass == null) {
             LOG.warn("Input class is not defined. Using default: BufferedImage");
@@ -68,6 +69,9 @@ public class DjlAutoConfiguration {
         }
         if (filter != null) {
             builder.optFilters(filter);
+        }
+        if (artifactId != null) {
+            builder.optArtifactId(artifactId);
         }
         if (arguments != null) {
             builder.optArguments(arguments);
