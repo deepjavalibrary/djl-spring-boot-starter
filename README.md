@@ -5,7 +5,7 @@
 The [Deep Java Library](https://github.com/awslabs/djl) (DJL) is a library developed to help Java developers get started with deep learning.
 This project is a Spring Boot starter that allows Spring Boot developers to start using DJL for inference.
 
-The starter currently only supports dependency management.
+The starter supports dependency management and auto-configuration.
 
 ## Usage
 
