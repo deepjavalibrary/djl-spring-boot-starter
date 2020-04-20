@@ -10,7 +10,7 @@
     </parent>
     <groupId>ai.djl.spring</groupId>
     <artifactId>djl-spring-boot-starter-parent</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
     <name>djl-spring-boot-starter-parent</name>
     <description>DJL starter project for Spring Boot</description>
     <packaging>pom</packaging>
@@ -142,4 +142,8 @@
             </build>
         </profile>
     </profiles>
+
+  <scm>
+    <tag>djl-spring-boot-starter-project-0.2</tag>
+  </scm>
 </project>
