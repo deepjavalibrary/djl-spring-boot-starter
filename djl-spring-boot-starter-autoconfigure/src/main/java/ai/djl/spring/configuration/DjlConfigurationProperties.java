@@ -29,12 +29,12 @@ public class DjlConfigurationProperties {
     private ApplicationType applicationType;
 
     /**
-     * Defines the java data type used as input for inference.
+     * Defines the java data type used as input for inference. For example, {@link java.awt.image.BufferedImage} can be used for cases when input is image.
      */
     private Class<?> inputClass;
 
     /**
-     * Defines the java data type expected for inference output.
+     * Defines the java data type expected for inference output. {@link ai.djl.modality.cv.output.DetectedObjects} is a common output for classifications, object detection.
      */
     private Class<?> outputClass;
 
