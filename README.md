@@ -11,8 +11,7 @@ The starter supports dependency management and auto-configuration.
 
 The released artifacts are available from maven central. 
 
-Unreleased artifacts (snapshots) can be downloaded using [snapshot repository](https://oss.sonatype.org/content
-/repositories/snapshots/).
+Unreleased artifacts (snapshots) can be downloaded using snapshot repository: https://oss.sonatype.org/conten/repositories/snapshots/.
 
 Dependencies are divided into two sections: starter dependencies, which includes the libraries, and Spring autoconfiguration for Apache MXNet.
 
@@ -41,7 +40,8 @@ The starter configures dependencies using either platform-specific or automatic 
 
 **MXNet Auto Configuration**
 
-This will download the correct artifact at runtime (provided external internet egress is enabled):
+This will download the correct artifact at runtime (provided external internet egress is enabled), including Windows
+ specific artifacts:
 
     <dependency>
         <groupId>ai.djl.spring</groupId>
@@ -112,8 +112,7 @@ See `djl-spring-boot-console-sample`.
 For a more advanced example of the starter's capability, see the [DJL Spring Boot Demo](https://github.com/awslabs/djl-spring-boot-starter-demo).
 
 Also, please see the following post on the general applicability and usage: [Adopting machine learning in your
- microservices
- with DJL (Deep Java Library) and Spring Boot] (https://aws.amazon.com/blogs/opensource/adopting-machine-learning-in-your-microservices-with-djl-deep-java-library-and-spring-boot/).
+ microservices with DJL (Deep Java Library) and Spring Boot](https://aws.amazon.com/blogs/opensource/adopting-machine-learning-in-your-microservices-with-djl-deep-java-library-and-spring-boot/).
 
 ## License
 This project is licensed under the Apache-2.0 License.
