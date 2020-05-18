@@ -77,7 +77,14 @@ public class DjlAutoConfiguration {
             builder.optArguments(arguments);
         }
 
-        return ModelZoo.loadModel(builder.build());
+        try {
+            return ModelZoo.loadModel(builder.build());
+        }
+        catch(ModelNotFoundException ex) {
+            LOG.info("Requested model was not found");
+            LOG.info("List of available models {}", ModelZoo.listModels());
+            throw ex;
+        }
     }
 
     /**
