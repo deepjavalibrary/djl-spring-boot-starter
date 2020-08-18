@@ -13,6 +13,7 @@
 package ai.djl.spring.configuration;
 
 import ai.djl.MalformedModelException;
+import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.modality.cv.translator.SingleShotDetectionTranslator;
 import ai.djl.modality.cv.transform.Resize;
@@ -31,7 +32,6 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,7 +82,7 @@ public class DjlAutoConfigurationTest {
     @Test
     public void loadConfigurationWithArtifactId() {
         applicationContextRunner.withPropertyValues(
-                "djl.input-class = java.awt.image.BufferedImage",
+                "djl.input-class = ai.djl.modality.cv.Image",
                 "djl.output-class = ai.djl.modality.Classifications",
                 "djl.modelArtifactId = ai.djl.mxnet:squeezenet")
                 .run(context -> {
@@ -95,13 +95,12 @@ public class DjlAutoConfigurationTest {
     public void loadSSDWithCustomTranslator() {
         applicationContextRunner.withPropertyValues(
                 "djl.application-type = OBJECT_DETECTION",
-                "djl.input-class = java.awt.image.BufferedImage",
+                "djl.input-class = ai.djl.modality.cv.Image",
                 "djl.output-class = ai.djl.modality.cv.output.DetectedObjects",
                 "djl.model-filter.size = 512",
                 "djl.model-filter.backbone = resnet50",
                 "djl.model-filter.flavor = v1",
-                "djl.model-filter.dataset = voc",
-                "djl.arguments.threshold = 0.1")
+                "djl.model-filter.dataset = voc")
                 .withUserConfiguration(SSDWithTranslatorModelConfiguration.class)
                 .run(context -> {
                     assertThat(context).hasSingleBean(ZooModel.class);
@@ -124,7 +123,7 @@ public class DjlAutoConfigurationTest {
         }
 
         @Bean
-        public ZooModel<BufferedImage, DetectedObjects> model(@Qualifier("criteria") Map<String, String> criteria)
+        public ZooModel<Image, DetectedObjects> model(@Qualifier("criteria") Map<String, String> criteria)
                 throws MalformedModelException, ModelNotFoundException, IOException {
             return MxModelZoo.SSD.loadModel(criteria, new ProgressBar());
         }
@@ -137,7 +136,7 @@ public class DjlAutoConfigurationTest {
     static class SSDWithTranslatorModelConfiguration {
 
         @Bean
-        public Translator<BufferedImage, DetectedObjects> translator() {
+        public Translator<Image, DetectedObjects> translator() {
             int width = 512;
             int height = 512;
             double threshold = 0.1d;
@@ -147,7 +146,7 @@ public class DjlAutoConfigurationTest {
 
             return SingleShotDetectionTranslator.builder()
                     .setPipeline(pipeline)
-                    .setSynsetArtifactName("classes.txt")
+                    .optSynsetArtifactName("classes.txt")
                     .optThreshold((float) threshold)
                     .optRescaleSize(width, height)
                     .build();

@@ -14,6 +14,7 @@ package ai.djl.spring.configuration;
 
 import ai.djl.MalformedModelException;
 import ai.djl.inference.Predictor;
+import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
@@ -27,6 +28,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -55,7 +58,7 @@ public class DjlAutoConfiguration {
         Class<?> inputClass = properties.getInputClass();
         if (inputClass == null) {
             LOG.warn("Input class is not defined. Using default: BufferedImage");
-            inputClass = BufferedImage.class;
+            inputClass = Image.class;
         }
         Class<?> outputClass = properties.getOutputClass();
         if (outputClass == null) {
@@ -81,10 +84,20 @@ public class DjlAutoConfiguration {
             return ModelZoo.loadModel(builder.build());
         }
         catch(ModelNotFoundException ex) {
-            LOG.info("Requested model was not found");
-            LOG.info("List of available models {}", ModelZoo.listModels());
+            Yaml yaml = createYamlDumper();
+            LOG.error("Requested model was not found");
+            LOG.error("List of available models {}", yaml.dump(ModelZoo.listModels()));
             throw ex;
         }
+    }
+
+    private Yaml createYamlDumper() {
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setPrettyFlow(true);
+
+        Yaml yaml = new Yaml(options);
+        return yaml;
     }
 
     /**
