@@ -16,6 +16,8 @@ package ai.djl.spring.tensorflow;
 
 import ai.djl.inference.Predictor;
 import ai.djl.modality.Classifications;
+import ai.djl.modality.cv.Image;
+import ai.djl.modality.cv.ImageFactory;
 import ai.djl.repository.zoo.ZooModel;
 import ai.djl.spring.configuration.DjlAutoConfiguration;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,9 +26,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+import org.springframework.core.NestedRuntimeException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,17 +54,19 @@ public class DjlTensorFlowAutoConfigurationTest {
         applicationContextRunner.withPropertyValues(
                 "djl.application-type=IMAGE_CLASSIFICATION",
                 "djl.model-artifact-id=mobilenet",
-                "djl.input-class=java.awt.image.BufferedImage",
+                "djl.input-class=ai.djl.modality.cv.Image",
                 "djl.output-class=ai.djl.modality.Classifications")
                 .run(context -> {
                     assertThat(context).hasSingleBean(ZooModel.class);
                     assertThat(context).hasBean("predictorProvider");
-                    var predictor = (Supplier<Predictor<BufferedImage, Classifications>>) context.getBean("predictorProvider");
-                    Classifications result = predictor.get().predict(ImageIO.read(this.getClass()
-                            .getResourceAsStream("/puppy-in-white-and-red-polka.jpg")));
-
+                    var predictor = (Supplier<Predictor<Image, Classifications>>) context.getBean("predictorProvider");
+                    Classifications result = predictor.get().predict(getClassPathImage(("/puppy-in-white-and-red-polka.jpg")));
                     LOG.info(result.toString());
                 });
+    }
+
+    private Image getClassPathImage(String uri) throws IOException {
+        return ImageFactory.getInstance().fromInputStream(this.getClass().getResourceAsStream(uri));
     }
 
 }
