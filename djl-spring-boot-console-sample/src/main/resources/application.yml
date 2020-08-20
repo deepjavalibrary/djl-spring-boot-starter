@@ -2,7 +2,7 @@ djl:
   # Define application type
   application-type: OBJECT_DETECTION
   # Define input data type, a model may accept multiple input data type
-  input-class: java.awt.image.BufferedImage
+  input-class: ai.djl.modality.cv.Image
   # Define output data type, a model may generate different out put
   output-class: ai.djl.modality.cv.output.DetectedObjects
   # Define filters that matches your application's need

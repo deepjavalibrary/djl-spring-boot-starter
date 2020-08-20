@@ -44,6 +44,11 @@ public class DjlConfigurationProperties {
     private String modelArtifactId;
 
     /**
+     * Model repository URK
+     */
+    private String[] urls;
+
+    /**
      * Arguments that allow the user to override pre-process/post-process behavior.
      *
      * <p>

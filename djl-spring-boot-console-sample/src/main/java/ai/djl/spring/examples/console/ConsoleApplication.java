@@ -13,6 +13,8 @@
 package ai.djl.spring.examples.console;
 
 import ai.djl.inference.Predictor;
+import ai.djl.modality.cv.Image;
+import ai.djl.modality.cv.ImageFactory;
 import ai.djl.modality.cv.output.DetectedObjects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +22,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamResource;
 
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.function.Supplier;
 
 @SpringBootApplication
@@ -42,7 +50,7 @@ public class ConsoleApplication implements CommandLineRunner {
      * Then casting to the right type.
      */
     @Resource
-    private Supplier<Predictor<BufferedImage, DetectedObjects>> predictorProvider;
+    private Supplier<Predictor<Image, DetectedObjects>> predictorProvider;
 
     public static void main(String[] args) {
         SpringApplication.run(ConsoleApplication.class, args);
@@ -50,12 +58,43 @@ public class ConsoleApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
+        var resources = new org.springframework.core.io.Resource[] {
+                new ClassPathResource("/puppy-in-white-and-red-polka.jpg"),
+                new ClassPathResource("/street-car-bus-truck.jpg"),
+                new ClassPathResource("/various-objects.png")
+        };
+
+        for(var resource : resources) {
+            runInference(resource);
+        }
+    }
+
+    private void runInference(org.springframework.core.io.Resource resource) throws IOException, ai.djl.translate.TranslateException {
+        Image image = ImageFactory.getInstance().fromInputStream(resource.getInputStream());
+
         try (var predictor = predictorProvider.get()) {
-            var results = predictor.predict(ImageIO.read(this.getClass()
-                    .getResourceAsStream("/puppy-in-white-and-red-polka.jpg")));
+            var results = predictor.predict(image);
             for(var result : results.items()) {
                 LOG.info("results: {}", result.toString());
             }
+            saveBoundingBoxImage(image, results, resource.getFilename());
         }
+    }
+
+    private static void saveBoundingBoxImage(Image img, DetectedObjects detection, String fileName)
+            throws IOException {
+        Path outputDir = Paths.get("target/output");
+        Files.createDirectories(outputDir);
+
+        // Make image copy with alpha channel because original image was jpg
+        Image newImage = img.duplicate(Image.Type.TYPE_INT_ARGB);
+        newImage.drawBoundingBoxes(detection);
+
+        Path imagePath = outputDir.resolve(fileName);
+
+        // OpenJDK can't save jpg with alpha channel
+        newImage.save(Files.newOutputStream(imagePath), "png");
+        LOG.info("Detected objects image has been saved in: {}", imagePath);
     }
 }

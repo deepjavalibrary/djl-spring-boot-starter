@@ -5,7 +5,7 @@
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>2.2.6.RELEASE</version>
+        <version>2.3.3.RELEASE</version>
     </parent>
     <groupId>ai.djl.spring.examples</groupId>
     <artifactId>djl-spring-boot-console-sample</artifactId>
@@ -24,8 +24,14 @@
         </dependency>
         <dependency>
             <groupId>ai.djl.spring</groupId>
-            <artifactId>djl-spring-boot-starter-mxnet-auto</artifactId>
+            <artifactId>djl-spring-boot-starter-pytorch-auto</artifactId>
             <version>0.6-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ai.djl.tensorflow</groupId>
+            <artifactId>tensorflow-api</artifactId>
+            <version>0.6.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>

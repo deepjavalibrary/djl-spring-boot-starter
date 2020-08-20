@@ -79,6 +79,7 @@ public class DjlAutoConfiguration {
         if (arguments != null) {
             builder.optArguments(arguments);
         }
+        
 
         try {
             return ModelZoo.loadModel(builder.build());
