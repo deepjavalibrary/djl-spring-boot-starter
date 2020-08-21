@@ -28,6 +28,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
@@ -51,11 +52,13 @@ public class DjlAutoConfiguration {
 
     @Bean
     public ZooModel<?, ?> model() throws MalformedModelException, ModelNotFoundException, IOException {
-        ApplicationType applicationType = properties.getApplicationType();
-        Map<String, String> filter = properties.getModelFilter();
-        Map<String, Object> arguments = properties.getArguments();
-        String artifactId = properties.getModelArtifactId();
-        Class<?> inputClass = properties.getInputClass();
+        var applicationType = properties.getApplicationType();
+        var filter = properties.getModelFilter();
+        var arguments = properties.getArguments();
+        var artifactId = properties.getModelArtifactId();
+        var inputClass = properties.getInputClass();
+        var urls = properties.getUrls();
+
         if (inputClass == null) {
             LOG.warn("Input class is not defined. Using default: BufferedImage");
             inputClass = Image.class;
@@ -80,7 +83,10 @@ public class DjlAutoConfiguration {
             builder.optArguments(arguments);
         }
         
-
+        if(urls != null && urls.length > 0) {
+            builder.optModelUrls(StringUtils.arrayToCommaDelimitedString(urls));
+        }
+    
         try {
             return ModelZoo.loadModel(builder.build());
         }

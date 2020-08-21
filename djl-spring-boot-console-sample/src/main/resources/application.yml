@@ -6,9 +6,11 @@ djl:
   # Define output data type, a model may generate different out put
   output-class: ai.djl.modality.cv.output.DetectedObjects
   # Define filters that matches your application's need
-  model-filter:
-    size: 512
-    backbone: mobilenet1.0
+  urls:
+    - https://alpha-djl-demos.s3.amazonaws.com/model/quickdraw/doodle_mobilenet.zip
+#  model-filter:
+#    size: 512
+#    backbone: resnet
   # Override default pre-processing/post-processing behavior
   arguments:
     threshold: 0.2

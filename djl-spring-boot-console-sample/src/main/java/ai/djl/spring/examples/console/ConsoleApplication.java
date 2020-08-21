@@ -82,6 +82,7 @@ public class ConsoleApplication implements CommandLineRunner {
         }
     }
 
+
     private static void saveBoundingBoxImage(Image img, DetectedObjects detection, String fileName)
             throws IOException {
         Path outputDir = Paths.get("target/output");

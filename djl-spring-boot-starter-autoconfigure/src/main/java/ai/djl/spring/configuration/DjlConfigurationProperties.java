@@ -44,7 +44,8 @@ public class DjlConfigurationProperties {
     private String modelArtifactId;
 
     /**
-     * Model repository URK
+     * Model repository URLs. Multiple may be supplied to search for models. Specifying a single URL can be used
+     * to load a specific model. Can be specified as comma delimited field or as an array in the configuration file.
      */
     private String[] urls;
 
@@ -112,5 +113,13 @@ public class DjlConfigurationProperties {
 
     public void setArguments(Map<String, Object> arguments) {
         this.arguments = arguments;
+    }
+
+    public String[] getUrls() {
+        return urls;
+    }
+
+    public void setUrls(String[] urls) {
+        this.urls = urls;
     }
 }
