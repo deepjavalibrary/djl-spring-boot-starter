@@ -32,11 +32,10 @@ import org.springframework.util.StringUtils;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Map;
 import java.util.function.Supplier;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 @Configuration
 @ConditionalOnMissingBean(ZooModel.class)
 @EnableConfigurationProperties(DjlConfigurationProperties.class)
@@ -45,7 +44,7 @@ public class DjlAutoConfiguration {
     private static final Logger LOG = LoggerFactory.getLogger(DjlAutoConfiguration.class);
 
     @Autowired(required = false)
-    private Translator<?, ?> translator;
+    private Translator translator;
 
     @Autowired
     private DjlConfigurationProperties properties;
@@ -82,13 +81,18 @@ public class DjlAutoConfiguration {
         if (arguments != null) {
             builder.optArguments(arguments);
         }
+        if(translator != null) {
+            builder.optTranslator(translator);
+        }
         
         if(urls != null && urls.length > 0) {
             builder.optModelUrls(StringUtils.arrayToCommaDelimitedString(urls));
         }
     
         try {
-            return ModelZoo.loadModel(builder.build());
+            var zooModel = ModelZoo.loadModel(builder.build());
+            LOG.info("Successfully loaded model {}", zooModel.getName());
+            return zooModel;
         }
         catch(ModelNotFoundException ex) {
             Yaml yaml = createYamlDumper();
@@ -102,9 +106,7 @@ public class DjlAutoConfiguration {
         DumperOptions options = new DumperOptions();
         options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
         options.setPrettyFlow(true);
-
-        Yaml yaml = new Yaml(options);
-        return yaml;
+        return new Yaml(options);
     }
 
     /**

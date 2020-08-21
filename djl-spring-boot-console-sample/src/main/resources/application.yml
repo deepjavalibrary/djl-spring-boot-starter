@@ -5,6 +5,7 @@ djl:
   input-class: ai.djl.modality.cv.Image
   # Define output data type, a model may generate different out put
   output-class: ai.djl.modality.cv.output.DetectedObjects
+  #output-class: ai.djl.modality.Classifications
   # Define filters that matches your application's need
   urls:
     - https://alpha-djl-demos.s3.amazonaws.com/model/quickdraw/doodle_mobilenet.zip
