@@ -29,12 +29,10 @@
     <dependency>
       <groupId>ai.djl.mxnet</groupId>
       <artifactId>mxnet-model-zoo</artifactId>
-      <version>${djl.version}</version>
     </dependency>
     <dependency>
       <groupId>ai.djl.mxnet</groupId>
       <artifactId>mxnet-engine</artifactId>
-      <version>${djl.version}</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
