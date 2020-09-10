@@ -15,6 +15,7 @@ package ai.djl.spring.configuration;
 import ai.djl.MalformedModelException;
 import ai.djl.inference.Predictor;
 import ai.djl.modality.cv.Image;
+import ai.djl.modality.cv.ImageFactory;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
@@ -48,6 +49,17 @@ public class DjlAutoConfiguration {
 
     @Autowired
     private DjlConfigurationProperties properties;
+
+    /**
+     * Image factory is a convenience mechanism to create images from various resources like input streams, files, etc.
+     * that could be then used with the predictor for inference.
+     *
+     * @return instance of the {@link ImageFactory}
+     */
+    @Bean
+    public ImageFactory imageFactory() {
+        return ImageFactory.getInstance();
+    }
 
     @Bean
     public ZooModel<?, ?> model() throws MalformedModelException, ModelNotFoundException, IOException {
