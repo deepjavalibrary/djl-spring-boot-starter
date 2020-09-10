@@ -4,7 +4,7 @@
   <parent>
     <groupId>ai.djl.spring</groupId>
     <artifactId>djl-spring-boot-starter-parent</artifactId>
-    <version>0.6</version>
+    <version>0.7-SNAPSHOT</version>
     <relativePath>../djl-spring-boot-starter-parent</relativePath>
   </parent>
   <artifactId>djl-spring-boot-starter-pytorch-auto</artifactId>

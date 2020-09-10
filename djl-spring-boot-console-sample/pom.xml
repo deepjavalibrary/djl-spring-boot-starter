@@ -9,7 +9,7 @@
     </parent>
     <groupId>ai.djl.spring.examples</groupId>
     <artifactId>djl-spring-boot-console-sample</artifactId>
-    <version>0.6</version>
+    <version>0.7-SNAPSHOT</version>
 
     <properties>
         <java.version>11</java.version>
@@ -20,12 +20,12 @@
         <dependency>
             <groupId>ai.djl.spring</groupId>
             <artifactId>djl-spring-boot-starter-autoconfigure</artifactId>
-            <version>0.6</version>
+            <version>0.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ai.djl.spring</groupId>
             <artifactId>djl-spring-boot-starter-pytorch-auto</artifactId>
-            <version>0.6</version>
+            <version>0.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ai.djl.tensorflow</groupId>
@@ -49,8 +49,4 @@
             </plugin>
         </plugins>
     </build>
-
-  <scm>
-    <tag>djl-spring-boot-starter-project-0.6</tag>
-  </scm>
 </project>
