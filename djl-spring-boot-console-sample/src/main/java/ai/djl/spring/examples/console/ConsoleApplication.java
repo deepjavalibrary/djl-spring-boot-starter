@@ -61,17 +61,17 @@ public class ConsoleApplication implements CommandLineRunner {
      * Then casting to the right type.
      */
     @Resource
-    private Supplier<Predictor<Image, Classifications>> predictorProvider;
+    private Supplier<Predictor<Image, DetectedObjects>> predictorProvider;
 
-    @SuppressWarnings("rawtypes")
-    @Bean
-    public Translator translator() {
-        return ImageClassificationTranslator.builder()
-                .addTransform(new ToTensor())
-                .optFlag(Image.Flag.GRAYSCALE)
-                .optApplySoftmax(true)
-                .build();
-    }
+    // @SuppressWarnings("rawtypes")
+    // @Bean
+    // public Translator translator() {
+    //     return ImageClassificationTranslator.builder()
+    //             .addTransform(new ToTensor())
+    //             .optFlag(Image.Flag.GRAYSCALE)
+    //             .optApplySoftmax(true)
+    //             .build();
+    // }
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(ConsoleApplication.class, args);
@@ -105,7 +105,7 @@ public class ConsoleApplication implements CommandLineRunner {
             for(var result : items) {
                 LOG.info("results for {}: {}", resource.getFilename(), result.toString());
             }
-           // saveBoundingBoxImage(image, results, resource.getFilename());
+           saveBoundingBoxImage(image, results, resource.getFilename());
         }
     }
 

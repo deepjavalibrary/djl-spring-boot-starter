@@ -7,8 +7,8 @@ djl:
   output-class: ai.djl.modality.cv.output.DetectedObjects
   #output-class: ai.djl.modality.Classifications
   # Define filters that matches your application's need
-  urls:
-    - https://alpha-djl-demos.s3.amazonaws.com/model/quickdraw/doodle_mobilenet.zip
+  # urls:
+  #   - https://alpha-djl-demos.s3.amazonaws.com/model/quickdraw/doodle_mobilenet.zip
 #  model-filter:
 #    size: 512
 #    backbone: resnet
