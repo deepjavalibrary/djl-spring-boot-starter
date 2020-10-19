@@ -31,7 +31,6 @@
     <dependency>
       <groupId>ai.djl.pytorch</groupId>
       <artifactId>pytorch-native-auto</artifactId>
-      <version>${pytorch.native.version}</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
