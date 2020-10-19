@@ -12,6 +12,7 @@
  */
 package ai.djl.spring.configuration;
 
+import ai.djl.Device;
 import ai.djl.MalformedModelException;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.output.DetectedObjects;
@@ -125,7 +126,7 @@ public class DjlAutoConfigurationTest {
         @Bean
         public ZooModel<Image, DetectedObjects> model(@Qualifier("criteria") Map<String, String> criteria)
                 throws MalformedModelException, ModelNotFoundException, IOException {
-            return MxModelZoo.SSD.loadModel(criteria, new ProgressBar());
+            return MxModelZoo.SSD.loadModel(criteria, Device.defaultDevice(), new ProgressBar());
         }
     }
 
