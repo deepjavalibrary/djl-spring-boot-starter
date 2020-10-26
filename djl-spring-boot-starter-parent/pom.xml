@@ -41,7 +41,7 @@
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
         <mxnet.native.version>1.7.0-a</mxnet.native.version>
         <pytorch.native.version>1.6.0</pytorch.native.version>
-        <tensorflow.native.version>2.1.0</tensorflow.native.version>
+        <tensorflow.native.version>2.3.0</tensorflow.native.version>
     </properties>
 
     <repositories>
