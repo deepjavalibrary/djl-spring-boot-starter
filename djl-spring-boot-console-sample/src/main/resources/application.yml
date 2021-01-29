@@ -9,9 +9,11 @@ djl:
   # Define filters that matches your application's need
   # urls:
   #   - https://alpha-djl-demos.s3.amazonaws.com/model/quickdraw/doodle_mobilenet.zip
-#  model-filter:
-#    size: 512
-#    backbone: resnet
+  model-filter:
+    size: 512
+   # backbone: mobilenet1.0
   # Override default pre-processing/post-processing behavior
   arguments:
-    threshold: 0.2
+    threshold: 0.git
+    width: 121
+    height: 121

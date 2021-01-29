@@ -81,6 +81,23 @@ public class DjlAutoConfigurationTest {
     }
 
     @Test
+    public void loadConfigurationWithArgumentsDefined() {
+        applicationContextRunner.withPropertyValues(
+                "djl.application-type=OBJECT_DETECTION",
+                "djl.input-class=ai.djl.modality.cv.Image",
+                "djl.output-class=ai.djl.modality.cv.output.DetectedObjects",
+                "djl.model-filter.size=512",
+                "djl.model-filter.backbone=mobilenet1.0",
+                "djl.arguments.width=121",
+                "djl.arguments.height=121",
+                "djl.arguments.threshold=0.5" )
+                .run(context -> {
+                    assertThat(context).hasSingleBean(ZooModel.class);
+                    assertThat(context).hasBean("predictorProvider");
+                });
+    }
+
+    @Test
     public void loadConfigurationWithArtifactId() {
         applicationContextRunner.withPropertyValues(
                 "djl.input-class = ai.djl.modality.cv.Image",

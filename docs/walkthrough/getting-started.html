@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Abstract</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body class="vscode-light">
+        <p><strong>Work in progress</strong></p>
+<h2 id="abstract">Abstract</h2>
+<p>Many AWS customers (startups and large enterprises) are on their path to adopt machine learning and deep learning in their existing applications. The reasons for machine learning adoption are dictated by the pace of innovation in the industry and business use cases range from customer service (including object detection from images and video streams, sentiment analysis) to fraud detection and collaboration. * *However, until recently, the adoption path was quite steep and required development of internal technical expertise in new programming languages (e.g. python) and frameworks with cascading effect on the whole software development life-cycle, including coding, building, testing, deployment. The approach outlined in this blog post enables enterprises to leverage existing talent and resources (frameworks, pipelines, deployments) to integrate machine learning capabilities.</p>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>Spring boot, one of the most popular and wide-spread frameworks for microservices development, has simplified implementation of distributed systems. Despite its broad appeal, there are few options to easily integrate Machine Learning (ML) natively in Java. Existing solutions such as stock APIs often do not meet customized application requirements, and developing customized solutions is time consuming and not cost-effective.</p>
+<p>There are a number of ways how developers approached integration of machine learning capabilities in existing applications. Let’s take inference for example: current options vary from using stock API to having a Python or C++ based application wrapped with an API for remote calls. However, stock API while having robust models may not quite fit your domain or industry, causing defects discovered in production with few options to address them. In other cases, when running inference at scale (for example in streaming applications as well as latency sensitive microservices) making a remote call may not be a viable option due to performance reasons.</p>
+<p>Recognizing this challenge, we at AWS have created a few open-source projects to facilitate adoption of ML for Java and microservices and ultimately help our customers, partners and the open source community as a whole. These initiatives align closely with the AWS goal to take technology that was traditionally cost-prohibitive and difficult for many organizations to adopt, and make it accessible to a much broader audience.</p>
+<p>In this blog post we will demonstrate how Java users can integrate ML into their Spring applications with Spring
+Boot Starter for Deep Java Library (DJL).</p>
+<p>Together we will review how to apply these frameworks in action and integrate ML capabilities in a microservice, demonstrating common deep learning use cases around object detection and classification.</p>
+<h2 id="2-djl-overview">2. DJL Overview</h2>
+<p>Deep Java Library (DJL) is an open-source, high-level, framework-agnostic Java API for deep learning. DJL is designed to be easy to get started with and simple to use for Java developers. DJL provides a native Java development experience and functions like any other regular Java library.</p>
+<p>DJL provides a convenient abstraction layer to use the most popular AI/ML frameworks such as MXNet, PyTorch and TensorFlow. However, it is not just a convenience on top of the existing libraries some of which provide Java API / bindings. With DJL API you are getting a uniform and consistent layer that can interact with all of these frameworks, allowing to swap out the framework of choice without any impact to the client code.</p>
+<p>This unique features in combination with a fairly rich model zoo repository (repository with pre-trained models), can enable ML engineers to find optimal models for the task at hand regardless of the underlying model implementation.</p>
+<p>For more information on DJL please refer to the  <a href="https://github.com/awslabs/djl/">DJL GitHub Repository</a> and <a href="https://github.com/awslabs/djl/blob/master/docs/faq.md">FAQ</a>.</p>
+<h2 id="3-djl-spring-boot-starter">3. DJL Spring Boot Starter</h2>
+<p>What is Spring Boot Starter (or custom starter)? Spring Boot Starter is a one-stop shop for all the Spring and related technologies that you need without having to hunt through sample code and copy-paste loads of dependency descriptors. Please see the <a href="https://docs.spring.io/spring-boot/docs/2.2.2.RELEASE/reference/htmlsingle/#using-boot-starter">official Spring Boot documentation</a> for more information on the starters.</p>
+<p>Following this definition DJL Spring Boot Starter provides all the dependencies required to start using DJL in Spring as a single dependency. In addition to the dependency management, starter includes an <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-developing-auto-configuration">auto-configuration</a> that allows to automatically wire dependencies based on the configuration file supplied by the user and make them available as beans in the Spring Application context.</p>
+<h3 id="31-dependency-management">3.1 Dependency Management</h3>
+<p>DJL library is platform specific, however it provides ways to automatically look up correct dependency based on the target OS. Along with that, DJL may be configured with different underlying engines, such as MXNet, PyTorch and TensorFlow, so the user is expected to make this choice before the starter is used. However, even after the choice is made, the underlying engine (as well as the target OS archticture) can be changed by just changing your maven (or gradle) dependency with no impact to your code.</p>
+<p>The starter dependency management is organized in a way that provides most flexibility to the user.</p>
+<p>For MXNet starter the following OS classifiers are supported: <code>osx-x86_64</code> for Mac OSX, <code>linux-x86_64</code> for generic linux, <code>win-x86_64</code> for Windows distributions and <code>auto</code> for automatic detection of the target OS. The last option requires connectivity to the external artifact repository (e.g. Maven Central) at runtime, which may be an issue for systems with restricted egress.</p>
+<p>Below you can see an example of <em>MXNet Dependency for linux architecture</em>, which is optimal for container workloads:</p>
+<pre><code class="language-xml"><div>  <span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.2.6.RELEASE<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">properties</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">java.version</span>&gt;</span>11<span class="hljs-tag">&lt;/<span class="hljs-name">java.version</span>&gt;</span> <span class="hljs-comment">&lt;!-- 11 is the lowest supported java version, however 12 and 13 should work fine --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">jna.version</span>&gt;</span>5.3.0<span class="hljs-tag">&lt;/<span class="hljs-name">jna.version</span>&gt;</span> <span class="hljs-comment">&lt;!-- Required to override default JNA version for Spring Boot parent--&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">properties</span>&gt;</span> 
+
+  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>ai.djl.spring<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>djl-spring-boot-starter-mxnet-linux-x86_64<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${djl.starter.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span> <span class="hljs-comment">&lt;!-- e.g. 0.2 --&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</div></code></pre>
+<p><code>Auto</code> depedency that will download the correct artifact at runtime: <a id="maven-auto-dependency"></a></p>
+<pre><code class="language-xml"><div>  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>ai.djl.spring<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>djl-spring-boot-starter-mxnet-auto<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${djl.starter.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span> <span class="hljs-comment">&lt;!-- e.g. 0.2 --&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</div></code></pre>
+<p>Using <code>PyTorch</code> as an underlying engine the starter dependency:</p>
+<pre><code class="language-xml"><div>  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>ai.djl.spring<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>djl-spring-boot-starter-pytorch-auto<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${djl.starter.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span> <span class="hljs-comment">&lt;!-- e.g. 0.2 and above --&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</div></code></pre>
+<p>Gradle dependencies will look similar. It is important to set the JNA version as <code>jna.version=5.3.0</code> inside your <code>gradle.properties</code>, since Spring Boot parent pom brings a lower version of JNA which will not work with the DJL starter. Here is an example of your gradle build file (kotlin is used in this example) <code>build.gradle.kts</code>, assuming Spring Boot plugin is registered:</p>
+<pre><code class="language-kotlin"><div>  plugins {
+    ...
+    id(<span class="hljs-string">"org.springframework.boot"</span>)
+  }
+
+  repositories {
+    mavenCentral() <span class="hljs-comment">// released artifacts are available from maven central</span>
+  }
+
+  dependencies {
+    implementation(<span class="hljs-string">"ai.djl.spring:djl-spring-boot-starter-mxnet-auto:0.2"</span>)
+  }
+</div></code></pre>
+<h3 id="32-spring-auto-configuration">3.2 Spring Auto-configuration</h3>
+<p>Once depedencies are configured correctly in your Spring Boot application, the next step is to configure your beans and wire them properly for injection. It is fairly easy to configure DJL related beans and make them available in the Spring application context, but it requires internal knowledge of the library as well as peculiarities of individual classes for proper scoping, since some beans are thread-safe, others should be scoped per request/thread. To assist with this configuration, the DJL Spring Boot starter provides an <a href="https://docs.spring.io/spring-boot/docs/2.2.6.RELEASE/reference/html/using-spring-boot.html#using-boot-auto-configuration">auto-configuration</a>.</p>
+<p>This component is separate from the dependency component and requires an explicit dependency. It is done for a couple of reasons:</p>
+<ol>
+<li>Some developers prefer full control over the configuration options and may be opposed to the Spring &quot;auto magic&quot;. In such cases, the starter will support just basic set of dependencies and allow developers to wire components explicitly.</li>
+<li>Auto-configuration component is generic for all kinds of the DJL configuration. Regardless of the underlying target OS or the actual engine, the configuration component remains the same. So using the same auto-configuration, developers can swap underlying dependencies as a single step operation without any impact to the code.</li>
+</ol>
+<p>Declaring dependency on auto-configuration in maven:</p>
+<pre><code class="language-xml"><div>  <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>ai.djl.spring<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>djl-spring-boot-starter-autoconfigure<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>${djl.starter.version}<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</div></code></pre>
+<p>Or in gradle <code>build.gradle.kts</code>:</p>
+<pre><code class="language-kotlin"><div>  dependencies {
+    implementation(<span class="hljs-string">"ai.djl.spring:djl-spring-boot-starter-autoconfigure:<span class="hljs-subst">${djl.starter.version}</span>"</span>)
+  }
+</div></code></pre>
+<p>Once the dependency is declared, the Spring Boot framework will automatically locate the configuration and wire the required components. At present, for inference it will look up the model from the model zoo and create a predictor that will be readily available to run inference.</p>
+<p>Users are expected to supply standard Spring configuration (<code>application.yml</code> or <code>application.properties</code>) specifying their application type and model filter parameters to look up the proper model to use:</p>
+<pre><code class="language-java"><div>  QUESTION_ANSWER(NLP.QUESTION_ANSWER),
+  TEXT_CLASSIFICATION(NLP.TEXT_CLASSIFICATION),
+  IMAGE_CLASSIFICATION(CV.IMAGE_CLASSIFICATION),
+  OBJECT_DETECTION(CV.OBJECT_DETECTION),
+  ACTION_RECOGNITION(CV.ACTION_RECOGNITION),
+  INSTANCE_SEGMENTATION(CV.INSTANCE_SEGMENTATION),
+  POSE_ESTIMATION(CV.POSE_ESTIMATION),
+  SEMANTIC_SEGMENTATION(CV.SEMANTIC_SEGMENTATION);
+</div></code></pre>
+<p>For example, in order to run object detection in images, user can set the application type to <code>OBJECT_DETECTION</code>. DJL related configuration should be namespaced under <code>djl</code> for example <code>djl.application-type=OBJECT_DETECTION</code> if <code>application.properties</code> is used.</p>
+<p>Example of <code>yaml</code> configuration for DJL auto-configuration <a id="yaml-example"></a>:</p>
+<pre><code class="language-yaml"><div><span class="hljs-attr">  djl:</span>
+    <span class="hljs-comment"># Define application type</span>
+<span class="hljs-attr">    application-type:</span> <span class="hljs-string">OBJECT_DETECTION</span>
+    <span class="hljs-comment"># Define input data type, a model may accept multiple input data type</span>
+<span class="hljs-attr">    input-class:</span> <span class="hljs-string">java.awt.image.BufferedImage</span>
+    <span class="hljs-comment"># Define output data type, a model may generate different out put</span>
+<span class="hljs-attr">    output-class:</span> <span class="hljs-string">ai.djl.modality.cv.output.DetectedObjects</span>
+    <span class="hljs-comment"># Define filters that matches your application's need</span>
+<span class="hljs-attr">    model-filter:</span>
+<span class="hljs-attr">      size:</span> <span class="hljs-number">512</span>
+<span class="hljs-attr">      backbone:</span> <span class="hljs-string">mobilenet1.0</span>
+    <span class="hljs-comment"># Override default pre-processing/post-processing behavior</span>
+<span class="hljs-attr">    arguments:</span>
+<span class="hljs-attr">      threshold:</span> <span class="hljs-number">0.5</span> <span class="hljs-comment"># Display all results with probability of 0.5 and above</span>
+</div></code></pre>
+<h3 id="33-ide-support">3.3 IDE Support</h3>
+<p>Configuration creation does not have to be fully manual and DJL Spring Boot Starter provides configuration content assistant for most IDEs with the help of Spring IDE plugins (tested on IntelliJ IDEA, but expected to work in Eclipse with STS and NetBeans IDE).</p>
+<p>For IntelliJ you can use <code>Ctrl+Space</code> for auto-completion and <code>Ctrl+J</code> for quick doc on any property.</p>
+<img src="file:////Users/shapirov/projects/djl/djl-spring-boot-starter/docs/walkthrough/djl-start-ide-support-low-frame-30s.gif" width="600"/> 
+<h2 id="4-simple-application-walkthrough">4. Simple Application Walkthrough</h2>
+<p>Code Example based on <a href="https://github.com/awslabs/djl-spring-boot-starter/tree/master/djl-spring-boot-console-sample">Simple Spring Boot Application</a> demonstrate single shot object detection with DJL and MXNet.</p>
+<p>Dependencies setup are per <a href="#maven-auto-dependency">maven dependency section</a>. Configuration setup is identical to the <a href="#yaml-example"><code>application.yml</code> in the example</a>.
+The application is a regular console Spring Boot application with a single class (note that no other code is required).</p>
+<p><strong>Injecting predictor for object detection</strong></p>
+<pre><code class="language-java"><div>  <span class="hljs-meta">@Resource</span>
+  <span class="hljs-keyword">private</span> Supplier&lt;Predictor&lt;BufferedImage, DetectedObjects&gt;&gt; predictorProvider;
+</div></code></pre>
+<p>It is recommended to use predictor in a <code>try-with-resources</code> block to make sure it is closed after each use, hence the supplier of predictor is injected for convenient instantiation.</p>
+<p><strong>Running object detection</strong></p>
+<pre><code class="language-java"><div>  <span class="hljs-keyword">try</span> (<span class="hljs-keyword">var</span> predictor = predictorProvider.get()) {
+      <span class="hljs-keyword">var</span> results = predictor.predict(ImageIO.read(<span class="hljs-keyword">this</span>.getClass()
+            .getResourceAsStream(<span class="hljs-string">"/puppy-in-white-and-red-polka.jpg"</span>)));
+
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> result : results.items()) {
+          LOG.info(<span class="hljs-string">"results: {}"</span>, result.toString());
+      }
+  }
+</div></code></pre>
+<p>The above code will run object detection on the supplied image (expected to be on the class path) and output the results to the logger in the following form:</p>
+<pre><code><code><div>    a.d.s.e.console.ConsoleApplication       : results: class: &quot;dog&quot;, probability: 0.90820, bounds: [x=0.487, y=0.057, width=0.425, height=0.484]
+</div></code></code></pre>
+<p><strong>Building and running</strong></p>
+<p>Assuming you have checked out the repository and are now in the root of the repository:</p>
+<pre><code class="language-bash"><div>  &gt; git <span class="hljs-built_in">clone</span> git@github.com:awslabs/djl-spring-boot-starter.git 
+  &gt; <span class="hljs-built_in">cd</span> djl-spring-boot-starter/djl-spring-boot-console-sample
+  &gt; ../mvnw package
+  &gt; ../mvnw spring-boot:run
+</div></code></pre>
+<p>Alternatively you can run it directly with <code>java -jar</code> command:</p>
+<pre><code><code><div>  java -jar target/djl-spring-boot-console-sample-0.3-SNAPSHOT.jar     
+</div></code></code></pre>
+<h2 id="5-more-complex-application-example">5. More Complex Application Example</h2>
+<p>Code Examples based on <a href="https://github.com/awslabs/djl-spring-boot-starter-demo/tree/master/djl-spring-boot-app/">REST API example leveraging DJL Spring Boot Starter</a> demonstrates a RESTful API that can take images from Amazon S3 bucket and stores the object detection results back in S3. This API represents a microservice capable of taking any image reference (uploaded to the predefined Amazon S3 bucket) and run object detection on it. This API could be leveraged directly through REST API clients like Postman, or within a mobile or web application.</p>
+<p>The API portion is using gradle as its build system and leverages Spring MVC for REST API implementation. For simplicity, the controller is implemented as a blocking call. For high-volume production usage, it is recommended to use reactive style of API implementation such as WebFlux. It contains an example of an <a href="https://github.com/awslabs/djl-spring-boot-starter-demo/blob/master/djl-spring-boot-app/src/main/java/com/aws/samples/djlspringboot/InferenceConfiguration.java">explicit programmatic configuration</a> of DJL components in your Spring Boot Application.</p>
+<p>The web application portion is implemented as a Kotlin Spring MVC application with a reactive REST API client to invoke the backend API.</p>
+<p>The user is presented with a list of files and an option to select any file for upload and object detection, the API output is displayed directly below:</p>
+<img src="file:////Users/shapirov/projects/djl/djl-spring-boot-starter/docs/walkthrough/list-of-files.jpg" width="500"/>
+<p>The result of the object detection is applied back to the image, highlighting the areas where objects were detected and uploaded to S3:</p>
+<img src="file:////Users/shapirov/projects/djl/djl-spring-boot-starter/docs/walkthrough/object-detection-result.jpg" width="500"/>
+<p>In subsequent posts, we will review how to containerize these applications and organize a full CI/CD pipeline deploying to Amazon Elastic Kubernetes Service.</p>
+<h2 id="6-conclusion">6. Conclusion</h2>
+<p>Adopting machine learning with DJL and Spring Boot is a simple and powerful approach that enables customers to combine existing battle-tested microservice technology stack and the most proven deep learning frameworks like MXNet, Pytorch and Tensorflow through the convenient abstraction layers provided by DJL and Spring Boot.</p>
+<h2 id="7-references">7. References</h2>
+<p><a href="https://github.com/awslabs/djl-spring-boot-starter">DJL Spring Boot Starter</a> - Spring Boot starter that allows Spring Boot developers to start using DJL for inference</p>
+<p><a href="https://github.com/awslabs/djl-spring-boot-starter-demo">DJL Spring Boot Demo</a> - Demo repository containing java API that leverages the starter and gradle as well as a small kotlin-based web application</p>
+<p><a href="https://github.com/awslabs/djl/">DJL</a> - DJL (Deep Java Library) main repository</p>
+
+    </body>
+    </html>
