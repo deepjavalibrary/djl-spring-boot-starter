@@ -111,6 +111,10 @@ For more information on available criteria that are currently part of the reposi
 See `djl-spring-boot-console-sample`.
 For a more advanced example of the starter's capability, see the [DJL Spring Boot Demo](https://github.com/awslabs/djl-spring-boot-starter-demo).
 
+The demo project contains instructions how to deploy DJL based microservices to [Amazon EKS (Elastic Kubernetes 
+Service)](https://github.com/awslabs/djl-spring-boot-starter-demo#deploying-to-eks-amazon-elastic-kubernetes-service)
+and [PCF (Pivotal Cloud Foundry)](https://github.com/awslabs/djl-spring-boot-starter-demo#deploying-to-pcf).
+
 Also, please see the following post on the general applicability and usage: [Adopting machine learning in your
  microservices with DJL (Deep Java Library) and Spring Boot](https://aws.amazon.com/blogs/opensource/adopting-machine-learning-in-your-microservices-with-djl-deep-java-library-and-spring-boot/).
 
