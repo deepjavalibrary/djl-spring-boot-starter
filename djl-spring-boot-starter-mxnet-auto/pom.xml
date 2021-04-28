@@ -4,7 +4,7 @@
   <parent>
     <groupId>ai.djl.spring</groupId>
     <artifactId>djl-spring-boot-starter-parent</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.11-SNAPSHOT</version>
     <relativePath>../djl-spring-boot-starter-parent</relativePath>
   </parent>
   <artifactId>djl-spring-boot-starter-mxnet-auto</artifactId>
@@ -38,7 +38,6 @@
     <dependency>
       <groupId>ai.djl.mxnet</groupId>
       <artifactId>mxnet-native-auto</artifactId>
-      <version>${mxnet.native.version}</version>
       <scope>runtime</scope>
     </dependency>
   </dependencies>
