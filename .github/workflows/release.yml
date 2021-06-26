@@ -4,8 +4,11 @@
 name: publish-release
 
 on:
-  repository_dispatch:
-    types: [publish-release]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'release tag'
+        required: true
 
 jobs:
   build:
@@ -15,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        ref: ${{ github.event.client_payload.tag }}
+        ref: ${{ github.event.inputs.tag }}
     - name: Set up JDK 11
       uses: actions/setup-java@v1
       with:
@@ -35,7 +38,7 @@ jobs:
       env:
         GPG_KEY: ${{ secrets.signingKey }}
     - name: Release to OSS staging
-      run: mvn deploy -s settings.xml -Dgpg.passphrase=${GPG_PASSWORD} 
+      run: mvn deploy -s settings.xml -Dgpg.passphrase=${GPG_PASSWORD}
       env:
         OSS_USERNAME: ${{ secrets.ossrhUsername }}
         OSS_PASSWORD: ${{ secrets.ossrhPassword }}
