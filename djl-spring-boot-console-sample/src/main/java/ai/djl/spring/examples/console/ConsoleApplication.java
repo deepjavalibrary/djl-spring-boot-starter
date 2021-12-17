@@ -18,18 +18,12 @@ import ai.djl.modality.Classifications;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.ImageFactory;
 import ai.djl.modality.cv.output.DetectedObjects;
-import ai.djl.modality.cv.transform.Normalize;
-import ai.djl.modality.cv.transform.ToTensor;
-import ai.djl.modality.cv.translator.ImageClassificationTranslator;
-
-import ai.djl.translate.Translator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 
 import javax.annotation.Resource;
@@ -38,7 +32,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
-import java.util.List;
 import java.util.function.Supplier;
 
 @SpringBootApplication
@@ -116,7 +109,7 @@ public class ConsoleApplication implements CommandLineRunner {
         Files.createDirectories(outputDir);
 
         // Make image copy with alpha channel because original image was jpg
-        Image newImage = img.duplicate(Image.Type.TYPE_INT_ARGB);
+        Image newImage = img.duplicate();
         newImage.drawBoundingBoxes(detection);
 
         Path imagePath = outputDir.resolve(fileName);

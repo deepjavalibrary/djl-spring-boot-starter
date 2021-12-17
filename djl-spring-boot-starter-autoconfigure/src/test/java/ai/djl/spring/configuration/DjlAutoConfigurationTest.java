@@ -12,7 +12,7 @@
  */
 package ai.djl.spring.configuration;
 
-import ai.djl.Device;
+import ai.djl.Application;
 import ai.djl.MalformedModelException;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.output.DetectedObjects;
@@ -20,9 +20,9 @@ import ai.djl.modality.cv.translator.SingleShotDetectionTranslator;
 import ai.djl.modality.cv.transform.Resize;
 import ai.djl.modality.cv.transform.ToTensor;
 import ai.djl.mxnet.zoo.MxModelZoo;
+import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
 import ai.djl.repository.zoo.ZooModel;
-import ai.djl.training.util.ProgressBar;
 import ai.djl.translate.Pipeline;
 import ai.djl.translate.Translator;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,8 +34,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -131,19 +129,23 @@ public class DjlAutoConfigurationTest {
     static class SSDModelConfiguration {
 
         @Bean
-        public Map<String, String> criteria() {
-            Map<String, String> criteria = new HashMap<>();
-            criteria.put("size", "512");
-            criteria.put("backbone", "resnet50");
-            criteria.put("flavor", "v1");
-            criteria.put("dataset", "voc");
+        public Criteria<Image, DetectedObjects> criteria() {
+            Criteria<Image, DetectedObjects> criteria =
+                    Criteria.builder()
+                            .optApplication(Application.CV.OBJECT_DETECTION)
+                            .setTypes(Image.class, DetectedObjects.class)
+                            .optFilter("size", "512")
+                            .optFilter("backbone", "resnet50")
+                            .optFilter("flavor", "v1")
+                            .optFilter("dataset", "voc")
+                            .build();
             return criteria;
         }
 
         @Bean
-        public ZooModel<Image, DetectedObjects> model(@Qualifier("criteria") Map<String, String> criteria)
+        public ZooModel<Image, DetectedObjects> model(@Qualifier("criteria") Criteria<Image, DetectedObjects> criteria)
                 throws MalformedModelException, ModelNotFoundException, IOException {
-            return MxModelZoo.SSD.loadModel(criteria, Device.defaultDevice(), new ProgressBar());
+             return MxModelZoo.loadModel(criteria);
         }
     }
 
