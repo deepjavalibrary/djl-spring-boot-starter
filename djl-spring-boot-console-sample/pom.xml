@@ -26,12 +26,6 @@
             <artifactId>djl-spring-boot-starter-mxnet-auto</artifactId>
             <version>0.14.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>ai.djl.tensorflow</groupId>
-            <artifactId>tensorflow-api</artifactId>
-            <version>0.14.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
