@@ -9,7 +9,7 @@
     </parent>
     <groupId>ai.djl.spring.examples</groupId>
     <artifactId>djl-spring-boot-console-sample</artifactId>
-    <version>0.12-SNAPSHOT</version>
+    <version>0.14.0</version>
 
     <properties>
         <java.version>11</java.version>
@@ -19,17 +19,17 @@
         <dependency>
             <groupId>ai.djl.spring</groupId>
             <artifactId>djl-spring-boot-starter-autoconfigure</artifactId>
-            <version>0.12-SNAPSHOT</version>
+            <version>0.14.0</version>
         </dependency>
         <dependency>
             <groupId>ai.djl.spring</groupId>
             <artifactId>djl-spring-boot-starter-mxnet-auto</artifactId>
-            <version>0.12-SNAPSHOT</version>
+            <version>0.14.0</version>
         </dependency>
         <dependency>
             <groupId>ai.djl.tensorflow</groupId>
             <artifactId>tensorflow-api</artifactId>
-            <version>0.9.0</version>
+            <version>0.14.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
