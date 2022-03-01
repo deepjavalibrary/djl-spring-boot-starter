@@ -4,11 +4,11 @@
   <parent>
     <groupId>ai.djl.spring</groupId>
     <artifactId>djl-spring-boot-starter-parent</artifactId>
-    <version>0.15</version>
+    <version>0.16-SNAPSHOT</version>
     <relativePath>../djl-spring-boot-starter-parent</relativePath>
   </parent>
   <artifactId>djl-spring-boot-starter-autoconfigure</artifactId>
-  <version>0.15</version>
+  <version>0.16-SNAPSHOT</version>
   <name>djl-spring-boot-starter-autoconfigure</name>
   <description>DJL Spring Boot starter project</description>
 
@@ -27,7 +27,7 @@
     <dependency>
       <groupId>ai.djl.spring</groupId>
       <artifactId>djl-spring-boot-starter-mxnet-auto</artifactId>
-      <version>0.15</version>
+      <version>0.16-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
