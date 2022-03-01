@@ -21,6 +21,11 @@
             <artifactId>djl-spring-boot-starter-autoconfigure</artifactId>
             <version>0.15-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>ai.djl.spring</groupId>
+            <artifactId>djl-spring-boot-starter-mxnet-auto</artifactId>
+            <version>0.15-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
