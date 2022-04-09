@@ -96,13 +96,13 @@ public class DjlAutoConfiguration {
         if(translator != null) {
             builder.optTranslator(translator);
         }
-        
+
         if(urls != null && urls.length > 0) {
             builder.optModelUrls(StringUtils.arrayToCommaDelimitedString(urls));
         }
-    
+
         try {
-            var zooModel = ModelZoo.loadModel(builder.build());
+            var zooModel = builder.build().loadModel();
             LOG.info("Successfully loaded model {}", zooModel.getName());
             return zooModel;
         }
