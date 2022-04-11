@@ -19,7 +19,6 @@ import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.modality.cv.translator.SingleShotDetectionTranslator;
 import ai.djl.modality.cv.transform.Resize;
 import ai.djl.modality.cv.transform.ToTensor;
-import ai.djl.mxnet.zoo.MxModelZoo;
 import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
 import ai.djl.repository.zoo.ZooModel;
@@ -130,22 +129,20 @@ public class DjlAutoConfigurationTest {
 
         @Bean
         public Criteria<Image, DetectedObjects> criteria() {
-            Criteria<Image, DetectedObjects> criteria =
-                    Criteria.builder()
-                            .optApplication(Application.CV.OBJECT_DETECTION)
-                            .setTypes(Image.class, DetectedObjects.class)
-                            .optFilter("size", "512")
-                            .optFilter("backbone", "resnet50")
-                            .optFilter("flavor", "v1")
-                            .optFilter("dataset", "voc")
-                            .build();
-            return criteria;
+            return Criteria.builder()
+                    .optApplication(Application.CV.OBJECT_DETECTION)
+                    .setTypes(Image.class, DetectedObjects.class)
+                    .optFilter("size", "512")
+                    .optFilter("backbone", "resnet50")
+                    .optFilter("flavor", "v1")
+                    .optFilter("dataset", "voc")
+                    .build();
         }
 
         @Bean
         public ZooModel<Image, DetectedObjects> model(@Qualifier("criteria") Criteria<Image, DetectedObjects> criteria)
                 throws MalformedModelException, ModelNotFoundException, IOException {
-             return MxModelZoo.loadModel(criteria);
+             return criteria.loadModel();
         }
     }
 
