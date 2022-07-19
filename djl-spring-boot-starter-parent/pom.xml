@@ -10,7 +10,7 @@
     </parent>
     <groupId>ai.djl.spring</groupId>
     <artifactId>djl-spring-boot-starter-parent</artifactId>
-    <version>0.17-SNAPSHOT</version>
+    <version>0.18-SNAPSHOT</version>
     <name>djl-spring-boot-starter-parent</name>
     <description>DJL starter project for Spring Boot</description>
     <packaging>pom</packaging>
@@ -34,7 +34,7 @@
     </distributionManagement>
 
     <properties>
-        <djl.version>0.15.0</djl.version>
+        <djl.version>0.18.0</djl.version>
         <java.version>11</java.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
