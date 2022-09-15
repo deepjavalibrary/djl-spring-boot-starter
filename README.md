@@ -2,7 +2,7 @@
 
 ## General
 
-The [Deep Java Library](https://github.com/awslabs/djl) (DJL) is a library developed to help Java developers get started with deep learning.
+The [Deep Java Library](https://github.com/deepjavalibrary/djl) (DJL) is a library developed to help Java developers get started with deep learning.
 This project is a Spring Boot starter that allows Spring Boot developers to start using DJL for inference.
 
 The starter supports dependency management and auto-configuration.
@@ -104,16 +104,16 @@ To use autoconfiguration, use the following dependency:
             threshold: 0.2
  
 This configuration has IDE level support for content assistance in Intellij IDEA, Eclipse (with STS), and Netbeans.
-For more information on available criteria that are currently part of the repository, see the [DJL - MXNet model zoo](https://github.com/awslabs/djl/tree/master/mxnet/mxnet-model-zoo).
+For more information on available criteria that are currently part of the repository, see the [DJL - MXNet model zoo](https://github.com/deepjavalibrary/djl/tree/master/engines/mxnet/mxnet-model-zoo).
 
 ## Examples
 
 See `djl-spring-boot-console-sample`.
-For a more advanced example of the starter's capability, see the [DJL Spring Boot Demo](https://github.com/awslabs/djl-spring-boot-starter-demo).
+For a more advanced example of the starter's capability, see the [DJL Spring Boot Demo](https://github.com/deepjavalibrary/djl-spring-boot-starter-demo).
 
 The demo project contains instructions how to deploy DJL based microservices to [Amazon EKS (Elastic Kubernetes 
-Service)](https://github.com/awslabs/djl-spring-boot-starter-demo#deploying-to-eks-amazon-elastic-kubernetes-service)
-and [PCF (Pivotal Cloud Foundry)](https://github.com/awslabs/djl-spring-boot-starter-demo#deploying-to-pcf).
+Service)](https://github.com/deepjavalibrary/djl-spring-boot-starter-demo#deploying-to-eks-amazon-elastic-kubernetes-service)
+and [PCF (Pivotal Cloud Foundry)](https://github.com/deepjavalibrary/djl-spring-boot-starter-demo#deploying-to-pcf).
 
 Also, please see the following post on the general applicability and usage: [Adopting machine learning in your
  microservices with DJL (Deep Java Library) and Spring Boot](https://aws.amazon.com/blogs/opensource/adopting-machine-learning-in-your-microservices-with-djl-deep-java-library-and-spring-boot/).

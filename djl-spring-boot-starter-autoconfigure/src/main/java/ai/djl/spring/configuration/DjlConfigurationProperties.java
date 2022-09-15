@@ -24,7 +24,7 @@ public class DjlConfigurationProperties {
      *
      * <p>
      * For more information on available applications, see
-     * https://github.com/awslabs/djl/blob/master/api/src/main/java/ai/djl/Application.java
+     * https://github.com/deepjavalibrary/djl/blob/master/api/src/main/java/ai/djl/Application.java
      */
     private ApplicationType applicationType;
 
@@ -63,7 +63,7 @@ public class DjlConfigurationProperties {
      *
      * <p>
      * For more information on available filters that are currently part of the repository, see
-     * https://github.com/awslabs/djl/tree/master/model-zoo#how-to-find-a-pre-trained-model-in-the-model-zoo
+     * https://github.com/deepjavalibrary/djl/tree/master/model-zoo#how-to-find-a-pre-trained-model-in-the-model-zoo
      */
     private Map<String, String> modelFilter;
 
