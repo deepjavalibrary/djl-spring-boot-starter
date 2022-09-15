@@ -26,7 +26,7 @@ DJL provides a convenient abstraction layer to use the most popular AI/ML framew
 
 This unique features in combination with a fairly rich model zoo repository (repository with pre-trained models), can enable ML engineers to find optimal models for the task at hand regardless of the underlying model implementation. 
 
-For more information on DJL please refer to the  [DJL GitHub Repository](https://github.com/awslabs/djl/) and [FAQ](https://github.com/awslabs/djl/blob/master/docs/faq.md).
+For more information on DJL please refer to the  [DJL GitHub Repository](https://github.com/deepjavalibrary/djl/) and [FAQ](https://github.com/deepjavalibrary/djl/blob/master/docs/faq.md).
 
 
 ## 3. DJL Spring Boot Starter
@@ -175,7 +175,7 @@ For IntelliJ you can use `Ctrl+Space` for auto-completion and `Ctrl+J` for quick
 
 ## 4. Simple Application Walkthrough
 
-Code Example based on [Simple Spring Boot Application](https://github.com/awslabs/djl-spring-boot-starter/tree/master/djl-spring-boot-console-sample) demonstrate single shot object detection with DJL and MXNet.
+Code Example based on [Simple Spring Boot Application](https://github.com/deepjavalibrary/djl-spring-boot-starter/tree/master/djl-spring-boot-console-sample) demonstrate single shot object detection with DJL and MXNet.
 
 Dependencies setup are per [maven dependency section](#maven-auto-dependency). Configuration setup is identical to the [`application.yml` in the example](#yaml-example).
 The application is a regular console Spring Boot application with a single class (note that no other code is required). 
@@ -212,7 +212,7 @@ The above code will run object detection on the supplied image (expected to be o
 Assuming you have checked out the repository and are now in the root of the repository:
 
 ```bash
-  > git clone git@github.com:awslabs/djl-spring-boot-starter.git 
+  > git clone git@github.com:deepjavalibrary/djl-spring-boot-starter.git 
   > cd djl-spring-boot-starter/djl-spring-boot-console-sample
   > ../mvnw package
   > ../mvnw spring-boot:run
@@ -226,9 +226,9 @@ Alternatively you can run it directly with `java -jar` command:
 
 ## 5. More Complex Application Example 
 
-Code Examples based on [REST API example leveraging DJL Spring Boot Starter](https://github.com/awslabs/djl-spring-boot-starter-demo/tree/master/djl-spring-boot-app/) demonstrates a RESTful API that can take images from Amazon S3 bucket and stores the object detection results back in S3. This API represents a microservice capable of taking any image reference (uploaded to the predefined Amazon S3 bucket) and run object detection on it. This API could be leveraged directly through REST API clients like Postman, or within a mobile or web application. 
+Code Examples based on [REST API example leveraging DJL Spring Boot Starter](https://github.com/deepjavalibrary/djl-spring-boot-starter-demo/tree/master/djl-spring-boot-app/) demonstrates a RESTful API that can take images from Amazon S3 bucket and stores the object detection results back in S3. This API represents a microservice capable of taking any image reference (uploaded to the predefined Amazon S3 bucket) and run object detection on it. This API could be leveraged directly through REST API clients like Postman, or within a mobile or web application. 
 
-The API portion is using gradle as its build system and leverages Spring MVC for REST API implementation. For simplicity, the controller is implemented as a blocking call. For high-volume production usage, it is recommended to use reactive style of API implementation such as WebFlux. It contains an example of an [explicit programmatic configuration](https://github.com/awslabs/djl-spring-boot-starter-demo/blob/master/djl-spring-boot-app/src/main/java/com/aws/samples/djlspringboot/InferenceConfiguration.java) of DJL components in your Spring Boot Application.
+The API portion is using gradle as its build system and leverages Spring MVC for REST API implementation. For simplicity, the controller is implemented as a blocking call. For high-volume production usage, it is recommended to use reactive style of API implementation such as WebFlux. It contains an example of an [explicit programmatic configuration](https://github.com/deepjavalibrary/djl-spring-boot-starter-demo/blob/master/djl-spring-boot-app/src/main/java/com/aws/samples/djlspringboot/InferenceConfiguration.java) of DJL components in your Spring Boot Application.
 
 The web application portion is implemented as a Kotlin Spring MVC application with a reactive REST API client to invoke the backend API. 
 
@@ -248,9 +248,9 @@ Adopting machine learning with DJL and Spring Boot is a simple and powerful appr
 
 ## 7. References
 
-[DJL Spring Boot Starter](https://github.com/awslabs/djl-spring-boot-starter) - Spring Boot starter that allows Spring Boot developers to start using DJL for inference
+[DJL Spring Boot Starter](https://github.com/deepjavalibrary/djl-spring-boot-starter) - Spring Boot starter that allows Spring Boot developers to start using DJL for inference
  
-[DJL Spring Boot Demo](https://github.com/awslabs/djl-spring-boot-starter-demo) - Demo repository containing java API that leverages the starter and gradle as well as a small kotlin-based web application
+[DJL Spring Boot Demo](https://github.com/deepjavalibrary/djl-spring-boot-starter-demo) - Demo repository containing java API that leverages the starter and gradle as well as a small kotlin-based web application
  
-[DJL](https://github.com/awslabs/djl/) - DJL (Deep Java Library) main repository 
+[DJL](https://github.com/deepjavalibrary/djl/) - DJL (Deep Java Library) main repository 
  
