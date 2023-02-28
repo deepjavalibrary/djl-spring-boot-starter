@@ -41,7 +41,7 @@ public class ConsoleApplication implements CommandLineRunner {
 
     private static final Comparator<Classifications.Classification> byProbability =
             (Classifications.Classification o1, Classifications.Classification o2)->
-                    Double.valueOf(o2.getProbability()).compareTo(o1.getProbability());
+                    Double.compare(o2.getProbability(), o1.getProbability());
 
     /**
      * Note: @{@link Autowired} will fail on matching the generic type here.
@@ -56,17 +56,7 @@ public class ConsoleApplication implements CommandLineRunner {
     @Resource
     private Supplier<Predictor<Image, DetectedObjects>> predictorProvider;
 
-    // @SuppressWarnings("rawtypes")
-    // @Bean
-    // public Translator translator() {
-    //     return ImageClassificationTranslator.builder()
-    //             .addTransform(new ToTensor())
-    //             .optFlag(Image.Flag.GRAYSCALE)
-    //             .optApplySoftmax(true)
-    //             .build();
-    // }
-
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(ConsoleApplication.class, args);
     }
 

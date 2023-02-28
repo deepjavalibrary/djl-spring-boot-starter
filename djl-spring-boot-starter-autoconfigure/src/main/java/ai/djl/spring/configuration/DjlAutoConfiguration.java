@@ -15,13 +15,13 @@ package ai.djl.spring.configuration;
 import ai.djl.MalformedModelException;
 import ai.djl.inference.Predictor;
 import ai.djl.modality.cv.Image;
-import ai.djl.modality.cv.ImageFactory;
 import ai.djl.modality.cv.output.DetectedObjects;
 import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
 import ai.djl.repository.zoo.ModelZoo;
 import ai.djl.repository.zoo.ZooModel;
-import ai.djl.translate.Translator;
+import ai.djl.translate.TranslatorFactory;
+import ai.djl.util.ClassLoaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,6 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.IOException;
 import java.util.function.Supplier;
 
-@SuppressWarnings({"rawtypes", "unchecked"})
 @Configuration
 @ConditionalOnMissingBean(ZooModel.class)
 @EnableConfigurationProperties(DjlConfigurationProperties.class)
@@ -44,22 +43,8 @@ public class DjlAutoConfiguration {
 
     private static final Logger LOG = LoggerFactory.getLogger(DjlAutoConfiguration.class);
 
-    @Autowired(required = false)
-    private Translator translator;
-
     @Autowired
     private DjlConfigurationProperties properties;
-
-    /**
-     * Image factory is a convenience mechanism to create images from various resources like input streams, files, etc.
-     * that could be then used with the predictor for inference.
-     *
-     * @return instance of the {@link ImageFactory}
-     */
-    @Bean
-    public ImageFactory imageFactory() {
-        return ImageFactory.getInstance();
-    }
 
     @Bean
     public ZooModel<?, ?> model() throws MalformedModelException, ModelNotFoundException, IOException {
@@ -69,6 +54,7 @@ public class DjlAutoConfiguration {
         var artifactId = properties.getModelArtifactId();
         var inputClass = properties.getInputClass();
         var urls = properties.getUrls();
+        var translatorFactory = properties.getTranslatorFactory();
 
         if (inputClass == null) {
             LOG.warn("Input class is not defined. Using default: BufferedImage");
@@ -93,10 +79,11 @@ public class DjlAutoConfiguration {
         if (arguments != null) {
             builder.optArguments(arguments);
         }
-        if(translator != null) {
-            builder.optTranslator(translator);
+        if (translatorFactory != null) {
+            ClassLoader cl = ClassLoaderUtils.getContextClassLoader();
+            TranslatorFactory factory = ClassLoaderUtils.initClass(cl, TranslatorFactory.class, translatorFactory);
+            builder.optTranslatorFactory(factory);
         }
-
         if(urls != null && urls.length > 0) {
             builder.optModelUrls(StringUtils.arrayToCommaDelimitedString(urls));
         }
@@ -129,9 +116,6 @@ public class DjlAutoConfiguration {
      */
     @Bean
     public Supplier<Predictor<?, ?>> predictorProvider(ZooModel<?, ?> model) {
-        if (translator != null) {
-            LOG.info("Applying custom translator {}", translator.getClass());
-        }
-        return () -> translator == null ? model.newPredictor() : model.newPredictor(translator);
+        return model::newPredictor;
     }
 }
