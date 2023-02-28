@@ -50,6 +50,11 @@ public class DjlConfigurationProperties {
     private String[] urls;
 
     /**
+     * Defines the translatorFactory for the model.
+     */
+    private String translatorFactory;
+
+    /**
      * Arguments that allow the user to override pre-process/post-process behavior.
      *
      * <p>
@@ -121,5 +126,13 @@ public class DjlConfigurationProperties {
 
     public void setUrls(String[] urls) {
         this.urls = urls;
+    }
+
+    public String getTranslatorFactory() {
+        return translatorFactory;
+    }
+
+    public void setTranslatorFactory(String translatorFactory) {
+        this.translatorFactory = translatorFactory;
     }
 }
