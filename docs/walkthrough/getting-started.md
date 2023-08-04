@@ -221,7 +221,7 @@ Assuming you have checked out the repository and are now in the root of the repo
 Alternatively you can run it directly with `java -jar` command:
 
 ```
-  java -jar target/djl-spring-boot-console-sample-0.21-SNAPSHOT.jar     
+  java -jar target/djl-spring-boot-console-sample-0.23-SNAPSHOT.jar     
 ```
 
 ## 5. More Complex Application Example 
