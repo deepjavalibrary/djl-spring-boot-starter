@@ -13,7 +13,6 @@
 package ai.djl.spring.examples.console;
 
 import ai.djl.inference.Predictor;
-
 import ai.djl.modality.Classifications;
 import ai.djl.modality.cv.Image;
 import ai.djl.modality.cv.ImageFactory;

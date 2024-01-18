@@ -35,7 +35,7 @@
 
     <properties>
         <djl.version>0.26.0</djl.version>
-        <java.version>17</java.version>
+        <java.version>11</java.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.1.0</maven-source-plugin.version>
     </properties>

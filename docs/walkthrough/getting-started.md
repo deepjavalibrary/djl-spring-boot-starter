@@ -53,7 +53,7 @@ Below you can see an example of *MXNet Dependency for linux architecture*, which
   </parent>
 
   <properties>
-    <java.version>17</java.version> <!-- 11 is the lowest supported java version, however 12 and 13 should work fine -->
+    <java.version>11</java.version> <!-- 11 is the lowest supported java version, however 12 and 13 should work fine -->
     <jna.version>5.3.0</jna.version> <!-- Required to override default JNA version for Spring Boot parent-->
   </properties>
 
