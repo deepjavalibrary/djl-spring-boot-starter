@@ -12,6 +12,9 @@
  */
 package ai.djl.spring.configuration;
 
+import java.io.IOException;
+import java.util.function.Supplier;
+
 import ai.djl.MalformedModelException;
 import ai.djl.inference.Predictor;
 import ai.djl.modality.cv.Image;
@@ -20,21 +23,20 @@ import ai.djl.repository.zoo.Criteria;
 import ai.djl.repository.zoo.ModelNotFoundException;
 import ai.djl.repository.zoo.ModelZoo;
 import ai.djl.repository.zoo.ZooModel;
+import ai.djl.training.util.ProgressBar;
 import ai.djl.translate.TranslatorFactory;
 import ai.djl.util.ClassLoaderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
-
-import java.io.IOException;
-import java.util.function.Supplier;
 
 @Configuration
 @ConditionalOnMissingBean(ZooModel.class)
@@ -86,6 +88,18 @@ public class DjlAutoConfiguration {
         }
         if(urls != null && urls.length > 0) {
             builder.optModelUrls(StringUtils.arrayToCommaDelimitedString(urls));
+        }
+        if (properties.isProgress()) {
+            builder.optProgress(new ProgressBar());
+        }
+        if (StringUtils.hasText(properties.getModelName())) {
+            builder.optModelName(properties.getModelName());
+        }
+        if (StringUtils.hasText(properties.getGroupId())) {
+            builder.optGroupId(properties.getGroupId());
+        }
+        if (StringUtils.hasText(properties.getEngine())) {
+            builder.optEngine(properties.getEngine());
         }
 
         try {
