@@ -5,12 +5,12 @@
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>2.7.3</version>
+        <version>3.2.1</version>
         <relativePath />
     </parent>
     <groupId>ai.djl.spring.examples</groupId>
     <artifactId>djl-spring-boot-console-sample</artifactId>
-    <version>0.23-SNAPSHOT</version>
+    <version>0.26-SNAPSHOT</version>
 
     <properties>
         <java.version>11</java.version>
@@ -20,12 +20,12 @@
         <dependency>
             <groupId>ai.djl.spring</groupId>
             <artifactId>djl-spring-boot-starter-autoconfigure</artifactId>
-            <version>0.23-SNAPSHOT</version>
+            <version>0.26-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ai.djl.spring</groupId>
             <artifactId>djl-spring-boot-starter-pytorch-auto</artifactId>
-            <version>0.23-SNAPSHOT</version>
+            <version>0.26-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>

@@ -72,6 +72,30 @@ public class DjlConfigurationProperties {
      */
     private Map<String, String> modelFilter;
 
+
+    /**
+     * Supported engine names: * https://docs.djl.ai/docs/engine.html#supported-engines
+     * Possible values are: MXNet, PyTorch, TensorFlow, TFLite, OnnxRuntime, PaddlePaddle, TensorRT
+     */
+    private String engine;
+
+    /**
+     * Defines the groupId of the model to be loaded.
+     */
+    private String groupId;
+
+    /**
+     * Defines the modelName of the model to be loaded.
+     * Leave it empty if you want to load the latest version of the model.
+     * Use "saved_model" for TensorFlow saved models.
+     */
+    private String modelName;
+
+    /**
+     * Defines whether to show progress bar when loading the model.
+     */
+    private boolean progress = true;
+
     public Map<String, String> getModelFilter() {
         return modelFilter;
     }
@@ -135,4 +159,36 @@ public class DjlConfigurationProperties {
     public void setTranslatorFactory(String translatorFactory) {
         this.translatorFactory = translatorFactory;
     }
+
+	public String getEngine() {
+		return engine;
+	}
+
+	public void setEngine(String engine) {
+		this.engine = engine;
+	}
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	public String getModelName() {
+		return modelName;
+	}
+
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
+	}
+
+	public boolean isProgress() {
+		return progress;
+	}
+
+	public void setProgress(boolean progress) {
+		this.progress = progress;
+	}
 }
