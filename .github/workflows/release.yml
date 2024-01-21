@@ -32,7 +32,9 @@ jobs:
         env:
           GPG_KEY: ${{ secrets.signingKey }}
       - name: Release to OSS staging
-        run: mvn deploy -s settings.xml -Dgpg.passphrase=${GPG_PASSWORD}
+        run: |
+          export MAVEN_OPTS="--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
+          mvn deploy -s settings.xml -Dgpg.passphrase=${GPG_PASSWORD}
         env:
           OSS_USERNAME: ${{ secrets.ossrhUsername }}
           OSS_PASSWORD: ${{ secrets.ossrhPassword }}
